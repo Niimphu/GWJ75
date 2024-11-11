@@ -15,7 +15,6 @@ func set_corresponding_character(corresponding_character: CharacterBody2D):
 	
 	var sprite: Sprite2D = Character.get_child(0).duplicate()
 	add_child(sprite)
-	sprite.set_owner(self)
 
 
 func _process(_delta):
