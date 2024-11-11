@@ -37,7 +37,6 @@ func spawn_character(spawn_position: Vector2) -> void:
 
 func spawn_reflection(character: CharacterBody2D) -> void:
 	var new_reflection = character_reflection_scene.instantiate()
-	new_reflection.add_child(character.get_child(0).duplicate())
-	new_reflection.Character = character
-	new_reflection.set_process(true)
+	new_reflection.set_corresponding_character(character)
 	Reflections.add_child(new_reflection)
+	new_reflection.mirrors_edge = $Window.bottom_edge
