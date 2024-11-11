@@ -2,19 +2,25 @@ extends CharacterBody2D
 
 @export var is_vampire :=  false
 
+@onready var Sprite := $Sprite2D
+
 var speed = 350
 
 var scale_factor: float = 1.0
 var direction := Vector2.RIGHT
 
+signal kill
+
 
 func _ready():
 	speed += RNG.randi_in_range(-25, 25)
+	await get_tree().create_timer(5).timeout
+	die()
 
 
 func _physics_process(_delta):
-	move()
 	scale_size()
+	move()
 
 
 func move() -> void:
@@ -28,3 +34,13 @@ func scale_size() -> void:
 	scale_factor = lerp(1.0, 1.3, global_position.y / screen_y)
 	
 	scale = Vector2(scale_factor, scale_factor)
+
+
+func set_sprite(new_sprite: Texture2D) -> void:
+	await ready
+	Sprite.set_texture(new_sprite)
+
+
+func die() -> void:
+	kill.emit()
+	queue_free()

@@ -1,17 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cx1xbuvmc41o6"]
+[gd_scene load_steps=3 format=3 uid="uid://cx1xbuvmc41o6"]
 
 [ext_resource type="Script" path="res://scenes/entities/character.gd" id="1_l5lut"]
-[ext_resource type="Texture2D" uid="uid://bql60vy5mgte" path="res://icon.svg" id="2_072ob"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f7l3l"]
 height = 80.0
 
 [node name="Character" type="CharacterBody2D"]
-position = Vector2(284, 327)
 script = ExtResource("1_l5lut")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_072ob")
 offset = Vector2(0, -45)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

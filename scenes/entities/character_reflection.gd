@@ -2,23 +2,19 @@ extends Node2D
 
 @export var DEPTH_FACTOR := 0.6
 @export var PARALLAX_FACTOR := 0.5 #wth do i call this
+@export var Character: CharacterBody2D
 
-@onready var Sprite: Sprite2D = $Sprite2D
 @onready var Camera: Camera2D = $"../../../Camera2D"
 
 var mirrors_edge: float = 12345
-var Character: CharacterBody2D
 
 func _ready():
 	set_process(false)
 
 
-func set_corresponding_character(corresponding_character: CharacterBody2D):
-	Character = corresponding_character
-	var og_sprite: Sprite2D = Character.get_child(0) #Sprite must be first child of character
-	Sprite.texture = og_sprite.texture
-	Sprite.offset = og_sprite.offset
-	set_process(true)
+#func set_corresponding_character(corresponding_character: CharacterBody2D):
+	#Character.kill.connect(character_killed)
+	#set_process(true)
 
 
 func _process(_delta):
@@ -35,3 +31,8 @@ func apply_reflection_effect() -> void:
 	
 	var scale_factor: float = 2 - Character.scale_factor
 	scale = Vector2(scale_factor, scale_factor)
+
+
+func character_killed() -> void:
+	set_process(false)
+	queue_free()
