@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 Test="*res://test/test.gd"
 RNG="*res://globals/rng.gd"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
 [input]
 
 left={

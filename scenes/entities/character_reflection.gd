@@ -32,6 +32,7 @@ func apply_reflection_effect() -> void:
 	global_position = Vector2(real_pos.x + camera_offset, mirrors_edge - reflection_offset)
 	var scale_factor: float = 2 - Character.scale_factor
 	scale = Vector2(scale_factor, scale_factor)
+	modulate.a = (scale_factor + 0.2) / 2
 
 
 func character_killed() -> void:

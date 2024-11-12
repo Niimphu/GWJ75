@@ -3,7 +3,8 @@
 [ext_resource type="Script" path="res://scenes/entities/character.gd" id="1_l5lut"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f7l3l"]
-height = 80.0
+radius = 5.0
+height = 62.0
 
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_l5lut")

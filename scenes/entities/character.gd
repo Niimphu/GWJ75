@@ -24,8 +24,8 @@ func _physics_process(_delta):
 
 
 func move() -> void:
-	velocity = direction * 350
-	velocity = velocity.limit_length(350)
+	velocity = direction * speed
+	velocity = velocity.limit_length(speed)
 	move_and_slide()
 
 
