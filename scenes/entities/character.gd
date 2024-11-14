@@ -10,6 +10,7 @@ extends CharacterBody2D
 @onready var Ray2: RayCast2D= $Ray2
 
 var speed = 50
+var direction := Vector2.RIGHT
 
 var scale_factor: float = 1.0
 
@@ -45,14 +46,16 @@ func _physics_process(_delta):
 
 
 func move() -> void:
-	var direction := Vector2.RIGHT
 	
-	if Ray1.is_colliding():
-		direction.y += global_position.distance_to(Ray1.get_collision_point()) / 15
-	elif Ray2.is_colliding():
-		direction.y -= global_position.distance_to(Ray2.get_collision_point()) / 15
+	#if Ray1.is_colliding():
+		#direction.y += global_position.distance_to(Ray1.get_collision_point()) / 15
+	#elif Ray2.is_colliding():
+		#direction.y -= global_position.distance_to(Ray2.get_collision_point()) / 15
+	#direction = direction.normalized()
+	
+	direction.y += RNG.randf_modifier()
+	direction.y = clampf(direction.y, -0.3, 0.3)
 	direction = direction.normalized()
-	
 	velocity = direction * speed
 	velocity = velocity.limit_length(speed)
 	move_and_slide()

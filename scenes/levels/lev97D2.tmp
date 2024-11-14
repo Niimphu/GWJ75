@@ -14,6 +14,7 @@ size = Vector2(1724, 311)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_kxtrn")
+CAMERA_SPEED = null
 
 [node name="SpritePreloader" type="ResourcePreloader" parent="."]
 resources = [PackedStringArray("Base", "Body", "Face", "Legs"), [ExtResource("2_ko1fk"), ExtResource("3_v0q4i"), ExtResource("4_vf3l2"), ExtResource("5_gercw")]]
@@ -53,6 +54,8 @@ y_sort_enabled = true
 position = Vector2(-128, 154)
 points = PackedVector2Array(57, -19, 57, 195)
 script = ExtResource("7_noj8o")
+
+[node name="SpawnTimer" type="Timer" parent="Spawner"]
 
 [node name="Characters" type="Node2D" parent="."]
 y_sort_enabled = true
