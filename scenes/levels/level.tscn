@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=13 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_kxtrn"]
 [ext_resource type="Script" path="res://scenes/levels/reflector.gd" id="2_3rbnu"]
@@ -8,9 +8,15 @@
 [ext_resource type="Texture2D" uid="uid://bxxokw447202l" path="res://assets/Legs.png" id="5_gercw"]
 [ext_resource type="Script" path="res://scenes/levels/sprite_preloader.gd" id="6_jfv5j"]
 [ext_resource type="Script" path="res://scenes/levels/spawner.gd" id="7_noj8o"]
+[ext_resource type="Script" path="res://scenes/levels/goal.gd" id="9_ephsm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_457q7"]
 size = Vector2(1724, 311)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2c4es"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ly7ke"]
+size = Vector2(20, 230)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_kxtrn")
@@ -25,10 +31,11 @@ clip_contents = true
 custom_minimum_size = Vector2(2500, 300)
 layout_mode = 3
 anchors_preset = 0
-offset_left = -694.0
-offset_top = -174.0
-offset_right = 1806.0
-offset_bottom = 126.0
+offset_left = -494.0
+offset_top = -160.0
+offset_right = 2006.0
+offset_bottom = 140.0
+mouse_filter = 2
 script = ExtResource("2_3rbnu")
 
 [node name="ColorRect" type="ColorRect" parent="Window"]
@@ -36,8 +43,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 85.0
+offset_top = 6.0
+offset_right = -917.0
+offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.838897, 0.838897, 0.838897, 1)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Window"]
@@ -46,16 +58,35 @@ color = Color(0.838897, 0.838897, 0.838897, 1)
 position = Vector2(812, 146)
 shape = SubResource("RectangleShape2D_457q7")
 
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Window/StaticBody2D"]
+position = Vector2(813, 502)
+shape = SubResource("WorldBoundaryShape2D_2c4es")
+
 [node name="Reflections" type="Node2D" parent="Window"]
 y_sort_enabled = true
 
+[node name="DifficultyTimer" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
+
 [node name="Spawner" type="Line2D" parent="."]
-position = Vector2(-128, 154)
-points = PackedVector2Array(57, -19, 57, 195)
+position = Vector2(-97, 172)
+points = PackedVector2Array(57, -19, 57, 153)
 script = ExtResource("7_noj8o")
+
+[node name="Goal" type="Area2D" parent="."]
+position = Vector2(666, 240)
+script = ExtResource("9_ephsm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
+position = Vector2(0, 10)
+shape = SubResource("RectangleShape2D_ly7ke")
 
 [node name="Characters" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(320, 179)
+
+[connection signal="timeout" from="DifficultyTimer" to="." method="_on_difficulty_timer_timeout"]
+[connection signal="body_entered" from="Goal" to="Goal" method="_on_body_entered"]
