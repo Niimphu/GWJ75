@@ -1,11 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=14 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_kxtrn"]
 [ext_resource type="Script" path="res://scenes/levels/reflector.gd" id="2_3rbnu"]
-[ext_resource type="Texture2D" uid="uid://b6ijujv7c72kg" path="res://assets/Base.png" id="2_ko1fk"]
-[ext_resource type="Texture2D" uid="uid://cix436jju2t3p" path="res://assets/Body.png" id="3_v0q4i"]
-[ext_resource type="Texture2D" uid="uid://bnt8jmm8uyh4f" path="res://assets/Face.png" id="4_vf3l2"]
-[ext_resource type="Texture2D" uid="uid://bxxokw447202l" path="res://assets/Legs.png" id="5_gercw"]
+[ext_resource type="Texture2D" uid="uid://b6ijujv7c72kg" path="res://assets/images/Base.png" id="2_ko1fk"]
+[ext_resource type="Texture2D" uid="uid://cix436jju2t3p" path="res://assets/images/Body.png" id="3_v0q4i"]
+[ext_resource type="Texture2D" uid="uid://bnt8jmm8uyh4f" path="res://assets/images/Face.png" id="4_vf3l2"]
+[ext_resource type="Texture2D" uid="uid://bxxokw447202l" path="res://assets/images/Legs.png" id="5_gercw"]
+[ext_resource type="Texture2D" uid="uid://de1hijjd6sheh" path="res://assets/images/Shadow.png" id="6_h1hdc"]
 [ext_resource type="Script" path="res://scenes/levels/sprite_preloader.gd" id="6_jfv5j"]
 [ext_resource type="Script" path="res://scenes/levels/spawner.gd" id="7_noj8o"]
 [ext_resource type="Script" path="res://scenes/levels/goal.gd" id="9_ephsm"]
@@ -22,7 +23,7 @@ size = Vector2(20, 230)
 script = ExtResource("1_kxtrn")
 
 [node name="SpritePreloader" type="ResourcePreloader" parent="."]
-resources = [PackedStringArray("Base", "Body", "Face", "Legs"), [ExtResource("2_ko1fk"), ExtResource("3_v0q4i"), ExtResource("4_vf3l2"), ExtResource("5_gercw")]]
+resources = [PackedStringArray("Base", "Body", "Face", "Legs", "Shadow"), [ExtResource("2_ko1fk"), ExtResource("3_v0q4i"), ExtResource("4_vf3l2"), ExtResource("5_gercw"), ExtResource("6_h1hdc")]]
 script = ExtResource("6_jfv5j")
 
 [node name="Window" type="Control" parent="."]

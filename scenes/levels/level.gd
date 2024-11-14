@@ -31,7 +31,7 @@ func _ready():
 func _physics_process(delta):
 	time += delta
 	if time > rate:
-		@warning_ignore("integer_division")
+		@warning_ignore("narrowing_conversion")
 		var spawn_count: int = time / rate
 		time = 0
 		for i in spawn_count:
@@ -66,9 +66,11 @@ func spawn_runners() -> void:
 
 func spawn_character() -> void:
 	var new_character: CharacterBody2D
-	if RNG.randi_in_range(0, vampire_rarity) == 0:
+	if RNG.randi_in_range(0, vampire_rarity) == 0 or spawns_since_vampire > vampire_rarity + 1:
+		spawns_since_vampire = 0
 		new_character = Spawner.spawn_character(Characters, Reflections, true, runners_can_spawn)
 	else:
+		spawns_since_vampire += 1
 		new_character = Spawner.spawn_character(Characters, Reflections)
 	
 	new_character.mouse_on.connect(mouse_over_character)
