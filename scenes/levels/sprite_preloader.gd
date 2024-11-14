@@ -1,6 +1,13 @@
 extends ResourcePreloader
 
-@onready var options := get_resource_list().size()
+func get_base() -> Texture2D:
+	return get_resource("Base")
 
-func get_random_sprite() -> Texture2D:
-	return get_resource(get_resource_list()[RNG.randi_in_range(0, options - 1)])
+func get_body() -> Texture2D:
+	return get_resource("Body")
+
+func get_face() -> Texture2D:
+	return get_resource("Face")
+
+func get_legs() -> Texture2D:
+	return get_resource("Legs")

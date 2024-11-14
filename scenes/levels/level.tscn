@@ -2,26 +2,24 @@
 
 [ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_kxtrn"]
 [ext_resource type="Script" path="res://scenes/levels/reflector.gd" id="2_3rbnu"]
-[ext_resource type="Texture2D" uid="uid://ddhh1nc0hirs8" path="res://test/aa.png" id="3_dd0gn"]
-[ext_resource type="Texture2D" uid="uid://bm1hupwfd0k4v" path="res://test/bb.png" id="4_yeb0v"]
-[ext_resource type="Texture2D" uid="uid://b5j7ky61mikxm" path="res://test/cc.png" id="5_wgh7o"]
+[ext_resource type="Texture2D" uid="uid://b6ijujv7c72kg" path="res://assets/Base.png" id="2_ko1fk"]
+[ext_resource type="Texture2D" uid="uid://cix436jju2t3p" path="res://assets/Body.png" id="3_v0q4i"]
+[ext_resource type="Texture2D" uid="uid://bnt8jmm8uyh4f" path="res://assets/Face.png" id="4_vf3l2"]
+[ext_resource type="Texture2D" uid="uid://bxxokw447202l" path="res://assets/Legs.png" id="5_gercw"]
 [ext_resource type="Script" path="res://scenes/levels/sprite_preloader.gd" id="6_jfv5j"]
-[ext_resource type="Script" path="res://scenes/levels/spawners.gd" id="7_noj8o"]
+[ext_resource type="Script" path="res://scenes/levels/spawner.gd" id="7_noj8o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_457q7"]
 size = Vector2(1724, 311)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_45cnw"]
-size = Vector2(92, 460.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_f0yqb"]
-size = Vector2(92, 460.5)
+size = Vector2(65, 206)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_kxtrn")
 
 [node name="SpritePreloader" type="ResourcePreloader" parent="."]
-resources = [PackedStringArray("aa", "bb", "cc"), [ExtResource("3_dd0gn"), ExtResource("4_yeb0v"), ExtResource("5_wgh7o")]]
+resources = [PackedStringArray("Base", "Body", "Face", "Legs"), [ExtResource("2_ko1fk"), ExtResource("3_v0q4i"), ExtResource("4_vf3l2"), ExtResource("5_gercw")]]
 script = ExtResource("6_jfv5j")
 
 [node name="Window" type="Control" parent="."]
@@ -30,10 +28,10 @@ clip_contents = true
 custom_minimum_size = Vector2(2500, 300)
 layout_mode = 3
 anchors_preset = 0
-offset_left = -620.0
-offset_top = -75.0
-offset_right = 1880.0
-offset_bottom = 225.0
+offset_left = -694.0
+offset_top = -174.0
+offset_right = 1806.0
+offset_bottom = 126.0
 script = ExtResource("2_3rbnu")
 
 [node name="ColorRect" type="ColorRect" parent="Window"]
@@ -52,25 +50,18 @@ position = Vector2(812, 146)
 shape = SubResource("RectangleShape2D_457q7")
 
 [node name="Reflections" type="Node2D" parent="Window"]
+y_sort_enabled = true
 
-[node name="Spawners" type="Node2D" parent="."]
+[node name="Spawner" type="Area2D" parent="."]
+position = Vector2(-128, 154)
 script = ExtResource("7_noj8o")
 
-[node name="Left" type="Area2D" parent="Spawners"]
-position = Vector2(-914, 242)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Left"]
-position = Vector2(57, 222.75)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner"]
+position = Vector2(43.5, 88)
 shape = SubResource("RectangleShape2D_45cnw")
 
-[node name="Right" type="Area2D" parent="Spawners"]
-position = Vector2(1940, 231)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Right"]
-position = Vector2(57, 217.75)
-shape = SubResource("RectangleShape2D_f0yqb")
-
 [node name="Characters" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(640, 360)
+position = Vector2(320, 179)

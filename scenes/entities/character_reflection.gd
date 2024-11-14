@@ -13,8 +13,9 @@ func set_corresponding_character(corresponding_character: CharacterBody2D):
 	Character = corresponding_character
 	Character.kill.connect(character_killed)
 	
-	var sprite: Sprite2D = Character.get_child(0).duplicate()
+	var sprite: Node2D = Character.get_child(0).duplicate()
 	add_child(sprite)
+	modulate = Color.LIGHT_SKY_BLUE
 
 
 func _process(_delta):
@@ -32,7 +33,6 @@ func apply_reflection_effect() -> void:
 	global_position = Vector2(real_pos.x + camera_offset, mirrors_edge - reflection_offset)
 	var scale_factor: float = 2 - Character.scale_factor
 	scale = Vector2(scale_factor, scale_factor)
-	modulate.a = (scale_factor + 0.2) / 2
 
 
 func character_killed() -> void:

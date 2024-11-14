@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var CAMERA_SPEED := 200
+@export var CAMERA_SPEED := 100
 
 @onready var Camera: Camera2D = $Camera2D
 @onready var Characters: Node2D = $Characters
@@ -27,7 +27,7 @@ func _process(delta):
 func spawn_character(spawn_position: Vector2) -> void:
 	var new_character = character_scene.instantiate()
 	new_character.set("global_position", spawn_position)
-	new_character.set_sprite(SpritePreloader.get_random_sprite())
+	new_character.set_sprites(SpritePreloader)
 	Characters.add_child(new_character)
 	if RNG.randi_in_range(0, 9) == 0:
 		new_character.is_vampire = true
