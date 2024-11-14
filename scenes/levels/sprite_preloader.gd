@@ -11,3 +11,6 @@ func get_face() -> Texture2D:
 
 func get_legs() -> Texture2D:
 	return get_resource("Legs")
+
+func get_shadow() -> Texture2D:
+	return get_resource("Shadow")

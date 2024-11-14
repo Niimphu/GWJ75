@@ -6,6 +6,7 @@ var is_vampire :=  false
 @onready var Body: Sprite2D = $Sprites/Body
 @onready var Face: Sprite2D = $Sprites/Face
 @onready var Legs: Sprite2D = $Sprites/Legs
+@onready var Shadow: Sprite2D = $Sprites/Shadow
 @onready var Animator: AnimationPlayer = $AnimationPlayer
 @onready var BloodSpray: CPUParticles2D = $BloodSpray
 @onready var Dust: CPUParticles2D = $Dust
@@ -88,6 +89,7 @@ func set_sprites(SpritePreloader: ResourcePreloader) -> void:
 	Body.set_texture(SpritePreloader.get_body())
 	Face.set_texture(SpritePreloader.get_face())
 	Legs.set_texture(SpritePreloader.get_legs())
+	Shadow.set_texture(SpritePreloader.get_shadow())
 
 
 func be_shot() -> void:
