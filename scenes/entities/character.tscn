@@ -184,20 +184,8 @@ texture = ExtResource("2_5bwd2")
 offset = Vector2(0, -26.585)
 hframes = 7
 vframes = 4
-
-[node name="Body" type="Sprite2D" parent="Sprites"]
-position = Vector2(0, -2)
-texture = ExtResource("3_ustsw")
-offset = Vector2(0, -27.09)
-hframes = 7
-
-[node name="Face" type="Sprite2D" parent="Sprites"]
-position = Vector2(0, -2)
-texture = ExtResource("4_wpnrd")
-offset = Vector2(0, -40.59)
-hframes = 7
-vframes = 2
-frame = 12
+region_enabled = true
+region_rect = Rect2(0, 0, 119, 256)
 
 [node name="Legs" type="Sprite2D" parent="Sprites"]
 position = Vector2(0, -2)
@@ -205,6 +193,20 @@ texture = ExtResource("5_8wyig")
 offset = Vector2(0, -6.055)
 hframes = 7
 vframes = 4
+
+[node name="Body" type="Sprite2D" parent="Sprites"]
+position = Vector2(0, -2)
+texture = ExtResource("3_ustsw")
+offset = Vector2(0, -26.61)
+hframes = 7
+
+[node name="Face" type="Sprite2D" parent="Sprites"]
+modulate = Color(0.0711603, 0.0429899, 0.0523865, 1)
+position = Vector2(0, -2)
+texture = ExtResource("4_wpnrd")
+offset = Vector2(0, -39.6)
+hframes = 7
+vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708

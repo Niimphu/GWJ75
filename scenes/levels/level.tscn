@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=25 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_kxtrn"]
 [ext_resource type="Script" path="res://scenes/levels/reflector.gd" id="2_3rbnu"]
@@ -9,7 +9,15 @@
 [ext_resource type="Texture2D" uid="uid://de1hijjd6sheh" path="res://assets/images/Shadow.png" id="6_h1hdc"]
 [ext_resource type="Script" path="res://scenes/levels/sprite_preloader.gd" id="6_jfv5j"]
 [ext_resource type="Script" path="res://scenes/levels/spawner.gd" id="7_noj8o"]
+[ext_resource type="AudioStream" uid="uid://bsyjkh5ugk7r8" path="res://assets/sounds/Traffic.mp3" id="8_qiqak"]
 [ext_resource type="Script" path="res://scenes/levels/goal.gd" id="9_ephsm"]
+[ext_resource type="AudioStream" uid="uid://034aqf6gwrqq" path="res://assets/sounds/Impact.mp3" id="9_vogts"]
+[ext_resource type="Script" path="res://scenes/ui/gun.gd" id="12_mpnxf"]
+[ext_resource type="AudioStream" uid="uid://cvp3bshdolwai" path="res://assets/sounds/Impact4.mp3" id="13_5v24y"]
+[ext_resource type="AudioStream" uid="uid://de2h2nvor14rt" path="res://assets/sounds/Reload.mp3" id="13_ib133"]
+[ext_resource type="Texture2D" uid="uid://bi6p0840fhmsd" path="res://assets/images/Crosshair.png" id="13_od8b1"]
+[ext_resource type="AudioStream" uid="uid://d02ijr38072mb" path="res://assets/sounds/ReadyWeapon.mp3" id="15_6ykvs"]
+[ext_resource type="AudioStream" uid="uid://bls6xwbvqo8tc" path="res://assets/sounds/Safety2.mp3" id="16_hk24f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_457q7"]
 size = Vector2(1724, 311)
@@ -19,12 +27,62 @@ size = Vector2(1724, 311)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ly7ke"]
 size = Vector2(20, 230)
 
+[sub_resource type="Animation" id="Animation_hqxa3"]
+resource_name = "recoil"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 2), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_w2grq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1piig"]
+_data = {
+"RESET": SubResource("Animation_w2grq"),
+"recoil": SubResource("Animation_hqxa3")
+}
+
 [node name="Level" type="Node2D"]
 script = ExtResource("1_kxtrn")
 
 [node name="SpritePreloader" type="ResourcePreloader" parent="."]
 resources = [PackedStringArray("Base", "Body", "Face", "Legs", "Shadow"), [ExtResource("2_ko1fk"), ExtResource("3_v0q4i"), ExtResource("4_vf3l2"), ExtResource("5_gercw"), ExtResource("6_h1hdc")]]
 script = ExtResource("6_jfv5j")
+
+[node name="AmbientNoise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_qiqak")
+autoplay = true
+bus = &"Environment"
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_vogts")
+pitch_scale = 3.0
+
+[node name="Miss" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_5v24y")
 
 [node name="Window" type="Control" parent="."]
 modulate = Color(0.494118, 0.662745, 0.670588, 1)
@@ -86,8 +144,67 @@ shape = SubResource("RectangleShape2D_ly7ke")
 [node name="Characters" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="UI" type="Control" parent="."]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+
+[node name="Gun" type="Node2D" parent="."]
+script = ExtResource("12_mpnxf")
+
+[node name="Sprite2D" type="Sprite2D" parent="Gun"]
+texture = ExtResource("13_od8b1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Gun"]
+libraries = {
+"": SubResource("AnimationLibrary_1piig")
+}
+
+[node name="Reload" type="AudioStreamPlayer" parent="Gun"]
+stream = ExtResource("13_ib133")
+
+[node name="Shoot" type="AudioStreamPlayer" parent="Gun"]
+pitch_scale = 2.0
+
+[node name="Ready" type="AudioStreamPlayer" parent="Gun"]
+stream = ExtResource("15_6ykvs")
+pitch_scale = 2.0
+
+[node name="Empty" type="AudioStreamPlayer" parent="Gun"]
+stream = ExtResource("16_hk24f")
+volume_db = -5.0
+
+[node name="CockingTimer" type="Timer" parent="Gun"]
+wait_time = 0.8
+one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="Gun"]
+wait_time = 2.0
+one_shot = true
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(320, 179)
 
 [connection signal="timeout" from="DifficultyTimer" to="." method="_on_difficulty_timer_timeout"]
 [connection signal="body_entered" from="Goal" to="Goal" method="_on_body_entered"]
+[connection signal="finished" from="Gun/Shoot" to="Gun" method="_on_shoot_finished"]
+[connection signal="timeout" from="Gun/CockingTimer" to="Gun" method="_on_cocking_timer_timeout"]
+[connection signal="timeout" from="Gun/ReloadTimer" to="Gun" method="_on_reload_timer_timeout"]

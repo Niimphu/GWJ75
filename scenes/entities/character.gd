@@ -42,12 +42,22 @@ func _ready():
 	Face.frame = face
 	Legs.frame = legs
 	
+	colour_hair()
+	
 	Animator.animation_finished.connect(die)
 
 
 func _physics_process(_delta):
 	if alive:
 		move()
+
+
+func colour_hair():
+	var R := RNG.rand_weight() * 0.7
+	var G := R * 0.9
+	var B := G * RNG.rand_weight()
+	
+	Face.set_modulate(Color(R, G, B))
 
 
 func _process(delta):

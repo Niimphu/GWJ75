@@ -18,12 +18,12 @@ func set_corresponding_character(corresponding_character: CharacterBody2D):
 	Character = corresponding_character
 	Character.kill.connect(character_killed)
 	CharacterBase = Character.get_child(0).get_child(1)
-	CharacterLegs = Character.get_child(0).get_child(4)
+	CharacterLegs = Character.get_child(0).get_child(2)
 	
 	var sprite: Node2D = Character.get_child(0).duplicate()
 	add_child(sprite)
 	Base = sprite.get_child(1)
-	Legs = sprite.get_child(4)
+	Legs = sprite.get_child(2)
 	modulate = Color.LIGHT_SKY_BLUE
 
 

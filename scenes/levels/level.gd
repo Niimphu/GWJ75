@@ -13,6 +13,9 @@ extends Node2D
 @onready var Characters: Node2D = $Characters
 @onready var Reflections: Node2D = $Window/Reflections
 @onready var Spawner: Line2D = $Spawner
+@onready var Gun: Node2D = $Gun
+@onready var HitSound := $Hit
+@onready var MissSound := $Miss
 
 var time := 0.0
 var vampire_rate := 3
@@ -26,6 +29,7 @@ func _ready():
 	vampire_rate += RNG.randi_in_range(0, 2)
 	$DifficultyTimer.wait_time = difficulty_timer
 	get_tree().create_timer(30).timeout.connect(spawn_runners)
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 
 func _physics_process(delta):
@@ -36,12 +40,15 @@ func _physics_process(delta):
 		time = 0
 		for i in spawn_count:
 			spawn_character()
-	if Input.is_action_just_pressed("left_click"):
+	if Input.is_action_just_pressed("left_click") && Gun.shoot():
 		shoot()
+	elif Input.is_action_just_pressed("reload"):
+		Gun.reload()
 
 
 func shoot() -> void:
 	if characters_under_mouse.is_empty():
+		MissSound.play()
 		return
 	
 	var shot_character: CharacterBody2D = null
@@ -55,7 +62,9 @@ func shoot() -> void:
 			shot_character = character
 	
 	if !shot_character:
+		MissSound.play()
 		return
+	HitSound.play()
 	characters_under_mouse.erase(shot_character)
 	shot_character.be_shot()
 
