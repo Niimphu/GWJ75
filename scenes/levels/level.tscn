@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=30 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/game.gd" id="1_kxtrn"]
 [ext_resource type="Script" path="res://scenes/levels/reflector.gd" id="2_3rbnu"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://de1hijjd6sheh" path="res://assets/images/Shadow.png" id="6_h1hdc"]
 [ext_resource type="Script" path="res://scenes/levels/sprite_preloader.gd" id="6_jfv5j"]
 [ext_resource type="Script" path="res://scenes/levels/spawner.gd" id="7_noj8o"]
+[ext_resource type="AudioStream" uid="uid://d3ao8oo1luqca" path="res://assets/sounds/Theme.mp3" id="8_8b7vb"]
 [ext_resource type="AudioStream" uid="uid://bsyjkh5ugk7r8" path="res://assets/sounds/Traffic.mp3" id="8_qiqak"]
 [ext_resource type="Script" path="res://scenes/levels/goal.gd" id="9_ephsm"]
 [ext_resource type="AudioStream" uid="uid://034aqf6gwrqq" path="res://assets/sounds/Impact.mp3" id="9_vogts"]
@@ -119,9 +120,15 @@ libraries = {
 "": SubResource("AnimationLibrary_fi0rd")
 }
 
+[node name="Music" type="AudioStreamPlayer" parent="Game"]
+stream = ExtResource("8_8b7vb")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
 [node name="AmbientNoise" type="AudioStreamPlayer" parent="Game"]
 stream = ExtResource("8_qiqak")
-volume_db = -5.0
+volume_db = -10.0
 autoplay = true
 bus = &"Environment"
 parameters/looping = true
@@ -176,7 +183,7 @@ shape = SubResource("WorldBoundaryShape2D_2c4es")
 y_sort_enabled = true
 
 [node name="DifficultyTimer" type="Timer" parent="Game"]
-wait_time = 20.0
+wait_time = 10.0
 autostart = true
 
 [node name="Spawner" type="Line2D" parent="Game"]
@@ -267,7 +274,6 @@ libraries = {
 
 [node name="Reload" type="AudioStreamPlayer" parent="Game/Gun"]
 stream = ExtResource("13_ib133")
-pitch_scale = 1.5
 bus = &"SFX"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Game/Gun"]
@@ -289,7 +295,7 @@ wait_time = 0.6
 one_shot = true
 
 [node name="ReloadTimer" type="Timer" parent="Game/Gun"]
-wait_time = 1.5
+wait_time = 2.0
 one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="Game"]

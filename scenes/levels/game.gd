@@ -5,7 +5,7 @@ extends Node2D
 ## How often difficulty increases in seconds
 @export var difficulty_timer := 5
 ## Multiplier for time between vampire spawns each time difficulty increases
-@export var difficulty_ramp := 0.95
+@export var difficulty_ramp := 0.9
 ## Frequency of NPC spawn (lower = more often)
 @export var rate: float = 1.2
 
@@ -30,6 +30,7 @@ var civilians_survived := 0
 var civilians_killed := 0
 var vampires_survived := 0
 var vampires_killed := 0
+var runners_killed := 0
 
 func _ready():
 	Spawner.mirror_bottom = $Window.bottom_edge
@@ -81,7 +82,9 @@ func shoot() -> void:
 	HitSound.play()
 	characters_under_mouse.erase(shot_character)
 	shot_character.be_shot()
-	if shot_character.is_vampire:
+	if shot_character.is_runner:
+		runners_killed += 1
+	elif shot_character.is_vampire:
 		vampires_killed += 1
 	else:
 		civilians_killed += 1
@@ -93,7 +96,7 @@ func spawn_runners() -> void:
 
 func spawn_character() -> void:
 	var new_character: CharacterBody2D
-	if RNG.randi_in_range(0, vampire_rarity) == 0 or spawns_since_vampire > vampire_rarity + 1:
+	if RNG.randi_in_range(0, vampire_rarity) == 0 or spawns_since_vampire > vampire_rarity:
 		spawns_since_vampire = 0
 		new_character = Spawner.spawn_character(Characters, Reflections, true, runners_can_spawn)
 	else:

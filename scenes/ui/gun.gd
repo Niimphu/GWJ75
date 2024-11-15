@@ -40,6 +40,7 @@ func reload() -> void:
 	if ammo == base_ammo:
 		return
 	reloading = true
+	Crosshair.self_modulate = Color.DARK_SLATE_BLUE
 	ReloadSound.play()
 	ReloadTimer.start()
 
@@ -51,6 +52,7 @@ func _on_cocking_timer_timeout():
 func _on_reload_timer_timeout():
 	ammo = base_ammo
 	BulletCounter.value = ammo
+	Crosshair.self_modulate = Color.WHITE
 	reloading = false
 
 
@@ -59,3 +61,4 @@ func _on_shoot_finished():
 		ReadySound.play()
 	else:
 		EmptySound.play()
+		reload()

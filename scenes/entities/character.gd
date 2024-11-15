@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 var is_vampire :=  false
+var is_runner := false
 
 @onready var Base: Sprite2D = $Sprites/Base
 @onready var Body: Sprite2D = $Sprites/Body
@@ -30,6 +31,8 @@ signal mouse_off(character: CharacterBody2D)
 
 func _ready():
 	speed += RNG.randi_in_range(-15, 15)
+	if is_runner:
+		speed *= 1.5
 	
 	base = RNG.randi_in_range(1, 3) * 7
 	if base == 7:

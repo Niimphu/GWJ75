@@ -15,7 +15,7 @@ func spawn_character(Characters: Node2D, Reflections: Node2D, vampire: bool = fa
 	Characters.add_child(new_character)
 	new_character.is_vampire = vampire
 	if vampire and can_be_runner and RNG.randi_in_range(0, 5) == 0:
-		new_character.speed *= 2.5
+		new_character.is_runner = true
 	if not vampire:
 		spawn_reflection(new_character, Reflections)
 	return new_character
