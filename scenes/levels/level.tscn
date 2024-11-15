@@ -183,7 +183,7 @@ position = Vector2(812, 146)
 shape = SubResource("RectangleShape2D_457q7")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Game/Window/StaticBody2D"]
-position = Vector2(813, 502)
+position = Vector2(814.487, 480)
 shape = SubResource("WorldBoundaryShape2D_2c4es")
 
 [node name="SidewalkReflection" type="Sprite2D" parent="Game/Window"]
