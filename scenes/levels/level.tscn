@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=29 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/game.gd" id="1_kxtrn"]
 [ext_resource type="Script" path="res://scenes/levels/reflector.gd" id="2_3rbnu"]
@@ -20,6 +20,21 @@
 [ext_resource type="Texture2D" uid="uid://bf1tkmukeulq8" path="res://assets/images/Bullets.png" id="16_wdyo0"]
 [ext_resource type="AudioStream" uid="uid://bpwx2luw453vx" path="res://assets/sounds/Empty.mp3" id="19_dhhhc"]
 
+[sub_resource type="Animation" id="Animation_ae7k8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Game/Overlay:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_gsc1o"]
 resource_name = "flash_red"
 length = 0.5
@@ -37,21 +52,6 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 0, 0, 0.290196), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_ae7k8"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Game/Overlay:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fi0rd"]
 _data = {
 "RESET": SubResource("Animation_ae7k8"),
@@ -62,6 +62,9 @@ _data = {
 size = Vector2(1724, 311)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2c4es"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sdbms"]
+bg_color = Color(0.6, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_w2grq"]
 length = 0.001
@@ -213,8 +216,20 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Game/UI/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Game/UI/MarginContainer"]
 layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Game/UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="ProgressBar" type="ProgressBar" parent="Game/UI/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 10)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_sdbms")
+max_value = 1000.0
+value = 200.0
+show_percentage = false
 
 [node name="Overlay" type="ColorRect" parent="Game"]
 offset_right = 641.0
