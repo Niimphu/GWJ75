@@ -24,7 +24,7 @@ var face: int
 var legs: int
 
 signal kill
-signal fin
+signal fin(is_vampire: bool)
 signal mouse_on(character: CharacterBody2D)
 signal mouse_off(character: CharacterBody2D)
 
@@ -121,11 +121,7 @@ func death_animation() -> void:
 
 func reached_goal() -> void:
 	Animator.play("fade")
-	fin.emit()
-	if is_vampire:
-		pass
-	else:
-		pass
+	fin.emit(is_vampire)
 
 
 func die(_anim_name = null) -> void:

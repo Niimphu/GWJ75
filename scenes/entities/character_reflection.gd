@@ -49,7 +49,7 @@ func apply_reflection_effect() -> void:
 	scale = Vector2(scale_factor, scale_factor)
 
 
-func goal_reached() -> void:
+func goal_reached(_is_vampire: bool) -> void:
 	Animator.play("fade")
 	await Animator.animation_finished
 	queue_free()
