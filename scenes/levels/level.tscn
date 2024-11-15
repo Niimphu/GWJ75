@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=32 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/game.gd" id="1_kxtrn"]
 [ext_resource type="Script" path="res://scenes/levels/reflector.gd" id="2_3rbnu"]
@@ -14,9 +14,11 @@
 [ext_resource type="Script" path="res://scenes/levels/goal.gd" id="9_ephsm"]
 [ext_resource type="AudioStream" uid="uid://034aqf6gwrqq" path="res://assets/sounds/Impact.mp3" id="9_vogts"]
 [ext_resource type="Script" path="res://scenes/ui/gun.gd" id="12_mpnxf"]
+[ext_resource type="Texture2D" uid="uid://b0e03l73cya6p" path="res://assets/images/Sidewalk2.png" id="12_pnrtp"]
 [ext_resource type="AudioStream" uid="uid://cvp3bshdolwai" path="res://assets/sounds/Impact4.mp3" id="13_5v24y"]
 [ext_resource type="AudioStream" uid="uid://de2h2nvor14rt" path="res://assets/sounds/Reload.mp3" id="13_ib133"]
 [ext_resource type="Texture2D" uid="uid://bi6p0840fhmsd" path="res://assets/images/Crosshair.png" id="13_od8b1"]
+[ext_resource type="Texture2D" uid="uid://bh2aqwlilncjm" path="res://assets/images/Windows.png" id="14_v8w1t"]
 [ext_resource type="AudioStream" uid="uid://d02ijr38072mb" path="res://assets/sounds/ReadyWeapon.mp3" id="15_6ykvs"]
 [ext_resource type="Texture2D" uid="uid://bf1tkmukeulq8" path="res://assets/images/Bullets.png" id="16_wdyo0"]
 [ext_resource type="AudioStream" uid="uid://bpwx2luw453vx" path="res://assets/sounds/Empty.mp3" id="19_dhhhc"]
@@ -142,6 +144,11 @@ bus = &"SFX"
 stream = ExtResource("13_5v24y")
 bus = &"SFX"
 
+[node name="Sidewalk" type="Sprite2D" parent="Game"]
+modulate = Color(0.758192, 0.758192, 0.758192, 1)
+position = Vector2(318.637, 250.758)
+texture = ExtResource("12_pnrtp")
+
 [node name="Window" type="Control" parent="Game"]
 modulate = Color(0.494118, 0.662745, 0.670588, 1)
 clip_contents = true
@@ -179,8 +186,18 @@ shape = SubResource("RectangleShape2D_457q7")
 position = Vector2(813, 502)
 shape = SubResource("WorldBoundaryShape2D_2c4es")
 
+[node name="SidewalkReflection" type="Sprite2D" parent="Game/Window"]
+modulate = Color(0.720467, 0.720468, 0.720467, 0.356863)
+position = Vector2(812.68, 228.851)
+scale = Vector2(1, -0.6)
+texture = ExtResource("12_pnrtp")
+
 [node name="Reflections" type="Node2D" parent="Game/Window"]
 y_sort_enabled = true
+
+[node name="WindowFrame" type="Sprite2D" parent="Game/Window"]
+position = Vector2(815.035, 300.357)
+texture = ExtResource("14_v8w1t")
 
 [node name="DifficultyTimer" type="Timer" parent="Game"]
 wait_time = 10.0
