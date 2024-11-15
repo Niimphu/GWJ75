@@ -205,7 +205,7 @@ autostart = true
 
 [node name="Spawner" type="Line2D" parent="Game"]
 position = Vector2(-97, 172)
-points = PackedVector2Array(57, -19, 57, 153)
+points = PackedVector2Array(57, -19, 56.6224, 135.003)
 script = ExtResource("7_noj8o")
 
 [node name="Goal" type="Area2D" parent="Game"]
