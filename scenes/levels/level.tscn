@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=25 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_kxtrn"]
 [ext_resource type="Script" path="res://scenes/levels/reflector.gd" id="2_3rbnu"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://de2h2nvor14rt" path="res://assets/sounds/Reload.mp3" id="13_ib133"]
 [ext_resource type="Texture2D" uid="uid://bi6p0840fhmsd" path="res://assets/images/Crosshair.png" id="13_od8b1"]
 [ext_resource type="AudioStream" uid="uid://d02ijr38072mb" path="res://assets/sounds/ReadyWeapon.mp3" id="15_6ykvs"]
+[ext_resource type="Texture2D" uid="uid://bf1tkmukeulq8" path="res://assets/images/Bullets.png" id="16_wdyo0"]
 [ext_resource type="AudioStream" uid="uid://pobilbnpdwpb" path="res://assets/sounds/Safety3.mp3" id="18_xobu1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_457q7"]
@@ -171,6 +172,17 @@ script = ExtResource("12_mpnxf")
 [node name="Sprite2D" type="Sprite2D" parent="Gun"]
 texture = ExtResource("13_od8b1")
 
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Gun/Sprite2D"]
+offset_left = -4.71809
+offset_top = -11.3738
+offset_right = 35.2819
+offset_bottom = 28.6262
+mouse_filter = 2
+max_value = 5.0
+value = 5.0
+texture_progress = ExtResource("16_wdyo0")
+texture_progress_offset = Vector2(0.47, 0.515)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Gun"]
 libraries = {
 "": SubResource("AnimationLibrary_1piig")
@@ -178,6 +190,7 @@ libraries = {
 
 [node name="Reload" type="AudioStreamPlayer" parent="Gun"]
 stream = ExtResource("13_ib133")
+pitch_scale = 1.5
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Gun"]
 stream = ExtResource("13_5v24y")
@@ -192,11 +205,11 @@ stream = ExtResource("18_xobu1")
 volume_db = -5.0
 
 [node name="CockingTimer" type="Timer" parent="Gun"]
-wait_time = 0.8
+wait_time = 0.6
 one_shot = true
 
 [node name="ReloadTimer" type="Timer" parent="Gun"]
-wait_time = 2.0
+wait_time = 1.5
 one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]

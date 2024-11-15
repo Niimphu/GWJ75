@@ -10,6 +10,7 @@ extends Node2D
 @onready var EmptySound := $Empty
 @onready var Crosshair := $Sprite2D
 @onready var Animator := $AnimationPlayer
+@onready var BulletCounter := $Sprite2D/TextureProgressBar
 
 var ammo := base_ammo
 var reloading := false
@@ -31,10 +32,13 @@ func shoot() -> bool:
 	cocking = true
 	CockingTimer.start()
 	ShootSound.play()
+	BulletCounter.value = ammo
 	return true
 
 
 func reload() -> void:
+	if ammo == base_ammo:
+		return
 	reloading = true
 	ReloadSound.play()
 	ReloadTimer.start()
@@ -46,6 +50,7 @@ func _on_cocking_timer_timeout():
 
 func _on_reload_timer_timeout():
 	ammo = base_ammo
+	BulletCounter.value = ammo
 	reloading = false
 
 
