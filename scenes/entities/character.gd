@@ -24,6 +24,7 @@ var face: int
 var legs: int
 
 signal kill
+signal fin
 signal mouse_on(character: CharacterBody2D)
 signal mouse_off(character: CharacterBody2D)
 
@@ -116,6 +117,15 @@ func death_animation() -> void:
 	else:
 		Dust.restart()
 		Animator.play("fade")
+
+
+func reached_goal() -> void:
+	Animator.play("fade")
+	fin.emit()
+	if is_vampire:
+		pass
+	else:
+		pass
 
 
 func die(_anim_name = null) -> void:

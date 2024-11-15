@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=24 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_kxtrn"]
 [ext_resource type="Script" path="res://scenes/levels/reflector.gd" id="2_3rbnu"]
@@ -17,15 +17,12 @@
 [ext_resource type="AudioStream" uid="uid://de2h2nvor14rt" path="res://assets/sounds/Reload.mp3" id="13_ib133"]
 [ext_resource type="Texture2D" uid="uid://bi6p0840fhmsd" path="res://assets/images/Crosshair.png" id="13_od8b1"]
 [ext_resource type="AudioStream" uid="uid://d02ijr38072mb" path="res://assets/sounds/ReadyWeapon.mp3" id="15_6ykvs"]
-[ext_resource type="AudioStream" uid="uid://bls6xwbvqo8tc" path="res://assets/sounds/Safety2.mp3" id="16_hk24f"]
+[ext_resource type="AudioStream" uid="uid://pobilbnpdwpb" path="res://assets/sounds/Safety3.mp3" id="18_xobu1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_457q7"]
 size = Vector2(1724, 311)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2c4es"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ly7ke"]
-size = Vector2(20, 230)
 
 [sub_resource type="Animation" id="Animation_hqxa3"]
 resource_name = "recoil"
@@ -135,11 +132,12 @@ script = ExtResource("7_noj8o")
 
 [node name="Goal" type="Area2D" parent="."]
 position = Vector2(666, 240)
+collision_layer = 4
 script = ExtResource("9_ephsm")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
-position = Vector2(0, 10)
-shape = SubResource("RectangleShape2D_ly7ke")
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Goal"]
+position = Vector2(-121, -32)
+polygon = PackedVector2Array(5, -68, 42, -68, 104, 162, 75, 162)
 
 [node name="Characters" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -182,14 +180,15 @@ libraries = {
 stream = ExtResource("13_ib133")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Gun"]
-pitch_scale = 2.0
+stream = ExtResource("13_5v24y")
+pitch_scale = 2.33
 
 [node name="Ready" type="AudioStreamPlayer" parent="Gun"]
 stream = ExtResource("15_6ykvs")
 pitch_scale = 2.0
 
 [node name="Empty" type="AudioStreamPlayer" parent="Gun"]
-stream = ExtResource("16_hk24f")
+stream = ExtResource("18_xobu1")
 volume_db = -5.0
 
 [node name="CockingTimer" type="Timer" parent="Gun"]

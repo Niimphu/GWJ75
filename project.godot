@@ -60,6 +60,12 @@ reload={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="NPC"
+2d_physics/layer_2="Hurtbox"
+2d_physics/layer_3="Goal"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

@@ -169,6 +169,7 @@ _data = {
 colors = PackedColorArray(0.408329, 0.408329, 0.408329, 1, 1, 1, 1, 0)
 
 [node name="Character" type="CharacterBody2D"]
+collision_mask = 5
 script = ExtResource("1_l5lut")
 
 [node name="Sprites" type="Node2D" parent="."]
@@ -213,6 +214,8 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_f7l3l")
 
 [node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, -23)

@@ -17,6 +17,7 @@ var Legs: Sprite2D
 func set_corresponding_character(corresponding_character: CharacterBody2D):
 	Character = corresponding_character
 	Character.kill.connect(character_killed)
+	Character.fin.connect(goal_reached)
 	CharacterBase = Character.get_child(0).get_child(1)
 	CharacterLegs = Character.get_child(0).get_child(2)
 	
@@ -46,6 +47,12 @@ func apply_reflection_effect() -> void:
 	global_position = Vector2(real_pos.x, mirrors_edge - reflection_offset)
 	var scale_factor: float = 2 - Character.scale_factor
 	scale = Vector2(scale_factor, scale_factor)
+
+
+func goal_reached() -> void:
+	Animator.play("fade")
+	await Animator.animation_finished
+	queue_free()
 
 
 func character_killed() -> void:
