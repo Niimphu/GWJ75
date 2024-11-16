@@ -11,6 +11,8 @@ var is_runner := false
 @onready var Animator: AnimationPlayer = $AnimationPlayer
 @onready var BloodSpray: CPUParticles2D = $BloodSpray
 @onready var Dust: CPUParticles2D = $Dust
+@onready var Step := $Step
+@onready var Death := $Death
 
 
 var speed: float = 50
@@ -48,6 +50,8 @@ func _ready():
 	Legs.frame = legs
 	
 	colour_hair()
+	Step.pitch_scale += RNG.rand_weight() * 2 - 0.5
+	Death.pitch_scale += RNG.rand_weight() - 0.3
 	
 	Animator.animation_finished.connect(die)
 	God.pause.connect(pause)
@@ -109,10 +113,17 @@ func set_sprites(SpritePreloader: ResourcePreloader) -> void:
 	Face.set_texture(SpritePreloader.get_face())
 	Legs.set_texture(SpritePreloader.get_legs())
 	Shadow.set_texture(SpritePreloader.get_shadow())
+	Step.stream = SpritePreloader.get_resource("step")
+	Step.play()
+	if is_vampire:
+		Death.stream = SpritePreloader.get_resource("ugh")
+	else:
+		Death.stream = SpritePreloader.get_resource("oof")
 
 
 func be_shot() -> void:
 	$CollisionShape2D.disabled = true
+	Death.play(0.4)
 	kill.emit()
 	alive = false
 	death_animation()
@@ -150,3 +161,8 @@ func pause() -> void:
 
 func resume() -> void:
 	paused = false
+
+
+func _on_step_finished():
+	if alive:
+		Step.play()

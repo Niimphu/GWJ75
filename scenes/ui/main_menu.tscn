@@ -1,8 +1,34 @@
-[gd_scene load_steps=7 format=3 uid="uid://b04po8go3nxwr"]
+[gd_scene load_steps=11 format=3 uid="uid://b04po8go3nxwr"]
 
 [ext_resource type="Theme" uid="uid://20xe0md1vr5n" path="res://scenes/ui/main_theme.tres" id="1_1s7gq"]
 [ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="2_dmoq6"]
 [ext_resource type="PackedScene" uid="uid://di0r42j8yn1ef" path="res://scenes/ui/volume.tscn" id="3_7slyd"]
+[ext_resource type="AudioStream" uid="uid://dddakrvk4ckad" path="res://assets/sounds/BeepBox-Song.mp3" id="3_k6lsa"]
+[ext_resource type="PackedScene" uid="uid://dhwa53oq5ens5" path="res://scenes/entities/menu_guy.tscn" id="4_gn63h"]
+
+[sub_resource type="Gradient" id="Gradient_kgv3y"]
+colors = PackedColorArray(0.3843, 0.489627, 0.61, 1, 0, 0.0443334, 0.14, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vjv3t"]
+gradient = SubResource("Gradient_kgv3y")
+fill = 1
+fill_from = Vector2(0.692661, 0.541284)
+fill_to = Vector2(0.100917, 0.0825688)
+
+[sub_resource type="Animation" id="Animation_vbost"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_7xav2"]
 resource_name = "fade_out"
@@ -18,21 +44,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_vbost"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Fade:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i40jn"]
@@ -51,14 +62,21 @@ grow_vertical = 2
 theme = ExtResource("1_1s7gq")
 script = ExtResource("2_dmoq6")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_k6lsa")
+volume_db = -3.773
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.18007, 0.311831, 0.404984, 1)
+texture = SubResource("GradientTexture2D_vjv3t")
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -108,6 +126,25 @@ custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Quit"
+
+[node name="Guys" type="Node2D" parent="."]
+
+[node name="TheGuys" type="Node2D" parent="Guys"]
+y_sort_enabled = true
+
+[node name="MenuGuy" parent="Guys/TheGuys" instance=ExtResource("4_gn63h")]
+
+[node name="MenuGuy2" parent="Guys/TheGuys" instance=ExtResource("4_gn63h")]
+position = Vector2(510.996, 151.97)
+
+[node name="MenuGuy3" parent="Guys/TheGuys" instance=ExtResource("4_gn63h")]
+position = Vector2(317.333, 142.445)
+
+[node name="MenuGuy4" parent="Guys/TheGuys" instance=ExtResource("4_gn63h")]
+position = Vector2(480.041, 237.689)
+
+[node name="MenuGuy5" parent="Guys/TheGuys" instance=ExtResource("4_gn63h")]
+position = Vector2(319.714, 259.913)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://dhwa53oq5ens5"]
+
+[ext_resource type="Script" path="res://scenes/entities/menu_guy.gd" id="1_74hq0"]
+[ext_resource type="Texture2D" uid="uid://de1hijjd6sheh" path="res://assets/images/Shadow.png" id="2_qawk6"]
+[ext_resource type="Texture2D" uid="uid://b6ijujv7c72kg" path="res://assets/images/Base.png" id="3_c1tne"]
+[ext_resource type="Texture2D" uid="uid://bxxokw447202l" path="res://assets/images/Legs.png" id="4_qyh4v"]
+[ext_resource type="Texture2D" uid="uid://cix436jju2t3p" path="res://assets/images/Body.png" id="5_llqb2"]
+[ext_resource type="Texture2D" uid="uid://bnt8jmm8uyh4f" path="res://assets/images/Face.png" id="6_ile51"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f7l3l"]
+radius = 3.0
+height = 8.0
+
+[node name="MenuGuy" type="CharacterBody2D"]
+position = Vector2(364.161, 204.354)
+collision_mask = 12
+script = ExtResource("1_74hq0")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Shadow" type="Sprite2D" parent="Sprites"]
+self_modulate = Color(0.846667, 0.8, 1, 0.176471)
+position = Vector2(0, 3)
+texture = ExtResource("2_qawk6")
+
+[node name="Base" type="Sprite2D" parent="Sprites"]
+position = Vector2(0, -2)
+texture = ExtResource("3_c1tne")
+offset = Vector2(0, -26.585)
+hframes = 7
+vframes = 4
+region_enabled = true
+region_rect = Rect2(0, 0, 119, 256)
+
+[node name="Legs" type="Sprite2D" parent="Sprites"]
+position = Vector2(0, -2)
+texture = ExtResource("4_qyh4v")
+offset = Vector2(0, -6.055)
+hframes = 7
+vframes = 4
+
+[node name="Body" type="Sprite2D" parent="Sprites"]
+position = Vector2(0, -2)
+texture = ExtResource("5_llqb2")
+offset = Vector2(0, -26.61)
+hframes = 7
+
+[node name="Face" type="Sprite2D" parent="Sprites"]
+modulate = Color(0.0711603, 0.0429899, 0.0523865, 1)
+position = Vector2(0, -2)
+texture = ExtResource("6_ile51")
+offset = Vector2(0, -39.6)
+hframes = 7
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_f7l3l")

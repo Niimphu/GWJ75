@@ -26,7 +26,7 @@ extends Node2D
 
 var time := 0.0
 var vampire_rate := 3
-var spawns_since_vampire := 0
+var spawns_since_vampire := 3
 var runners_can_spawn = false
 var characters_under_mouse: Array
 var health := 3
@@ -156,7 +156,6 @@ func lose_life() -> void:
 
 func bump_difficulty():
 	rate *= difficulty_ramp
-	Difficulty.wait_time += 5
 
 
 func end_game() -> void:

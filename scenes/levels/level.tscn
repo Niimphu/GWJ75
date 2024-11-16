@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=51 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/game.gd" id="1_kxtrn"]
 [ext_resource type="Theme" uid="uid://20xe0md1vr5n" path="res://scenes/ui/main_theme.tres" id="1_n57k3"]
@@ -14,7 +14,10 @@
 [ext_resource type="AudioStream" uid="uid://d3ao8oo1luqca" path="res://assets/sounds/Theme.mp3" id="8_8b7vb"]
 [ext_resource type="AudioStream" uid="uid://bsyjkh5ugk7r8" path="res://assets/sounds/Traffic.mp3" id="8_qiqak"]
 [ext_resource type="Script" path="res://scenes/levels/goal.gd" id="9_ephsm"]
+[ext_resource type="AudioStream" uid="uid://dj5x8anudpghc" path="res://assets/sounds/oof.mp3" id="9_vjc2o"]
 [ext_resource type="AudioStream" uid="uid://034aqf6gwrqq" path="res://assets/sounds/Impact.mp3" id="9_vogts"]
+[ext_resource type="AudioStream" uid="uid://b3arkfett2dr2" path="res://assets/sounds/step.wav" id="10_kh1cg"]
+[ext_resource type="AudioStream" uid="uid://b1eofxyov4qet" path="res://assets/sounds/ugh.mp3" id="11_426sa"]
 [ext_resource type="Script" path="res://scenes/entities/gun.gd" id="12_mpnxf"]
 [ext_resource type="Texture2D" uid="uid://b0e03l73cya6p" path="res://assets/images/Sidewalk2.png" id="12_pnrtp"]
 [ext_resource type="AudioStream" uid="uid://cvp3bshdolwai" path="res://assets/sounds/Impact4.mp3" id="13_5v24y"]
@@ -28,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://2w370aky3mx2" path="res://assets/images/Health.png" id="23_orcyr"]
 [ext_resource type="Script" path="res://scenes/levels/health.gd" id="23_v5ako"]
 [ext_resource type="PackedScene" uid="uid://di0r42j8yn1ef" path="res://scenes/ui/volume.tscn" id="26_m8bs0"]
+[ext_resource type="AudioStream" uid="uid://sbkqfwng2say" path="res://assets/sounds/shot2.wav" id="27_wugen"]
 [ext_resource type="Texture2D" uid="uid://dq4w232ykprmv" path="res://assets/images/Screenshot.png" id="28_07p7x"]
 [ext_resource type="Texture2D" uid="uid://c3v1wo1u7rp3w" path="res://assets/images/Screenshot2.png" id="28_oa34o"]
 [ext_resource type="Script" path="res://scenes/ui/gg.gd" id="28_ptk4u"]
@@ -166,22 +170,6 @@ tracks/0/keys = {
 "values": [Color(0, 0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_7xav2"]
-resource_name = "fade_out"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Fade:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_gd658"]
 resource_name = "fade_in"
 length = 2.0
@@ -197,6 +185,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7xav2"]
+resource_name = "fade_out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i40jn"]
@@ -221,7 +225,7 @@ script = ExtResource("1_shx5m")
 script = ExtResource("1_kxtrn")
 
 [node name="SpritePreloader" type="ResourcePreloader" parent="Game"]
-resources = [PackedStringArray("Base", "Body", "Face", "Legs", "Shadow"), [ExtResource("2_ko1fk"), ExtResource("3_v0q4i"), ExtResource("4_vf3l2"), ExtResource("5_gercw"), ExtResource("6_h1hdc")]]
+resources = [PackedStringArray("Base", "Body", "Face", "Legs", "Shadow", "oof", "step", "ugh"), [ExtResource("2_ko1fk"), ExtResource("3_v0q4i"), ExtResource("4_vf3l2"), ExtResource("5_gercw"), ExtResource("6_h1hdc"), ExtResource("9_vjc2o"), ExtResource("10_kh1cg"), ExtResource("11_426sa")]]
 script = ExtResource("6_jfv5j")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Game"]
@@ -373,8 +377,7 @@ stream = ExtResource("13_ib133")
 bus = &"SFX"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Game/Gun"]
-stream = ExtResource("13_5v24y")
-pitch_scale = 2.33
+stream = ExtResource("27_wugen")
 bus = &"SFX"
 
 [node name="Ready" type="AudioStreamPlayer" parent="Game/Gun"]
