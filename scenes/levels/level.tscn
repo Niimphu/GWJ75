@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=43 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/game.gd" id="1_kxtrn"]
 [ext_resource type="Theme" uid="uid://20xe0md1vr5n" path="res://scenes/ui/main_theme.tres" id="1_n57k3"]
@@ -24,9 +24,12 @@
 [ext_resource type="AudioStream" uid="uid://d02ijr38072mb" path="res://assets/sounds/ReadyWeapon.mp3" id="15_6ykvs"]
 [ext_resource type="Texture2D" uid="uid://bf1tkmukeulq8" path="res://assets/images/Bullets.png" id="16_wdyo0"]
 [ext_resource type="AudioStream" uid="uid://bpwx2luw453vx" path="res://assets/sounds/Empty.mp3" id="19_dhhhc"]
+[ext_resource type="Texture2D" uid="uid://bwb64hvpxleya" path="res://assets/images/Bloodbank.png" id="19_ya5xb"]
 [ext_resource type="Texture2D" uid="uid://2w370aky3mx2" path="res://assets/images/Health.png" id="23_orcyr"]
 [ext_resource type="Script" path="res://scenes/levels/health.gd" id="23_v5ako"]
 [ext_resource type="PackedScene" uid="uid://di0r42j8yn1ef" path="res://scenes/ui/volume.tscn" id="26_m8bs0"]
+[ext_resource type="Texture2D" uid="uid://dq4w232ykprmv" path="res://assets/images/Screenshot.png" id="28_07p7x"]
+[ext_resource type="Texture2D" uid="uid://c3v1wo1u7rp3w" path="res://assets/images/Screenshot2.png" id="28_oa34o"]
 
 [sub_resource type="Animation" id="Animation_ae7k8"]
 length = 0.001
@@ -293,6 +296,11 @@ script = ExtResource("9_ephsm")
 position = Vector2(-121, -32)
 polygon = PackedVector2Array(5, -68, 42, -68, 104, 162, 75, 162)
 
+[node name="Sprite2D" type="Sprite2D" parent="Game/Goal"]
+modulate = Color(0.74558, 0.74558, 0.74558, 1)
+position = Vector2(6, -95)
+texture = ExtResource("19_ya5xb")
+
 [node name="Characters" type="Node2D" parent="Game"]
 y_sort_enabled = true
 
@@ -388,7 +396,6 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
 [node name="Tutorial" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -421,33 +428,92 @@ theme_override_constants/margin_bottom = 30
 [node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Tutorial/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Tutorial/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Left" type="VBoxContainer" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer3/Left"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Sniper's Guide"
 
-[node name="HSeparator" type="HSeparator" parent="Tutorial/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer3/Left"]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="Label2" type="Label" parent="Tutorial/MarginContainer/VBoxContainer"]
+[node name="Controls" type="VBoxContainer" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer3/Left"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer3/Left/Controls"]
 layout_mode = 2
 text = "Shoot = Left Mouse Button"
 
-[node name="Label3" type="Label" parent="Tutorial/MarginContainer/VBoxContainer"]
+[node name="Label3" type="Label" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer3/Left/Controls"]
 layout_mode = 2
 text = "Reload = R"
 
-[node name="Label4" type="Label" parent="Tutorial/MarginContainer/VBoxContainer"]
+[node name="Label4" type="Label" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer3/Left/Controls"]
 layout_mode = 2
 text = "Pause = Esc"
 
+[node name="ReflectionGuide" type="HBoxContainer" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Label" type="Label" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer3/ReflectionGuide"]
+layout_mode = 2
+text = "Vampires don't have 
+reflections:
+Fire on sight"
+
+[node name="VSeparator" type="VSeparator" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer3/ReflectionGuide"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer3/ReflectionGuide"]
+custom_minimum_size = Vector2(140, 90)
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("28_07p7x")
+expand_mode = 1
+
 [node name="HSeparator2" type="HSeparator" parent="Tutorial/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 25
+theme_override_constants/separation = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Tutorial/MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 120)
+layout_mode = 2
+texture = ExtResource("28_oa34o")
+expand_mode = 1
+
+[node name="VSeparator" type="VSeparator" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "A life will be lost if a vampire reaches the
+blood bank, or if you shoot a civilian!"
+
+[node name="HSeparator3" type="HSeparator" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "You start with 3 lives. 
+Beware the runners..."
 
 [node name="Start" type="Button" parent="Tutorial/MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -86,7 +86,4 @@ layout_mode = 2
 text = "Main Menu
 "
 
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/SFX" to="." method="_on_sfx_value_changed"]
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/Env" to="." method="_on_env_value_changed"]
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/Music" to="." method="_on_music_value_changed"]
 [connection signal="button_down" from="MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_button_down"]

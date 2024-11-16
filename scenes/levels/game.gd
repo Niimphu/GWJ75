@@ -107,6 +107,7 @@ func shoot() -> void:
 		vampires_killed += 1
 	else:
 		civilians_killed += 1
+		lose_life()
 
 
 func spawn_runners() -> void:
@@ -131,11 +132,15 @@ func character_reached_goal(is_vampire: bool) -> void:
 	if game_over:
 		return
 	if is_vampire:
-		Hearts.lose_life()
-		health -= 1
-		Animator.play("flash_red")
-		if health <= 0:
-			end_game()
+		lose_life()
+
+
+func lose_life() -> void:
+	Hearts.lose_life()
+	Animator.play("flash_red")
+	health -= 1
+	if health <= 0:
+		end_game()
 
 
 func bump_difficulty():

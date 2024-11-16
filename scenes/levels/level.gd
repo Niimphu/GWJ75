@@ -12,8 +12,11 @@ func _ready():
 
 
 func _process(_delta):
+	if get_node_or_null("Tutorial"):
+		return
 	if Input.is_action_just_pressed("pause"):
 		if not paused:
+			paused = true
 			God.pause.emit()
 			Volume.visible = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
