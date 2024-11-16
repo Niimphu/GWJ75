@@ -256,13 +256,14 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.838897, 0.838897, 0.838897, 1)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Game/Window"]
+[node name="Boundary" type="StaticBody2D" parent="Game/Window"]
+collision_layer = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Window/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Window/Boundary"]
 position = Vector2(812, 146)
 shape = SubResource("RectangleShape2D_457q7")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Game/Window/StaticBody2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Game/Window/Boundary"]
 position = Vector2(814.487, 480)
 shape = SubResource("WorldBoundaryShape2D_2c4es")
 
