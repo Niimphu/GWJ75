@@ -13,6 +13,7 @@ var is_runner := false
 @onready var Dust: CPUParticles2D = $Dust
 @onready var Step := $Step
 @onready var Death := $Death
+@onready var Slurp := $Slurp
 
 
 var speed: float = 50
@@ -113,6 +114,7 @@ func set_sprites(SpritePreloader: ResourcePreloader) -> void:
 	Face.set_texture(SpritePreloader.get_face())
 	Legs.set_texture(SpritePreloader.get_legs())
 	Shadow.set_texture(SpritePreloader.get_shadow())
+	Slurp.stream = SpritePreloader.get_resource("schlurp")
 	Step.stream = SpritePreloader.get_resource("step")
 	Step.play()
 	if is_vampire:
@@ -124,6 +126,7 @@ func set_sprites(SpritePreloader: ResourcePreloader) -> void:
 func be_shot() -> void:
 	$CollisionShape2D.disabled = true
 	Death.play(0.4)
+	Step.stop()
 	kill.emit()
 	alive = false
 	death_animation()
@@ -140,6 +143,8 @@ func death_animation() -> void:
 
 func reached_goal() -> void:
 	Animator.play("fade")
+	if is_vampire:
+		Slurp.play()
 	fin.emit(is_vampire)
 
 

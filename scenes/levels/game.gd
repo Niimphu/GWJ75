@@ -16,7 +16,6 @@ extends Node2D
 @onready var Spawner: Line2D = $Spawner
 @onready var Gun: Node2D = $Gun
 @onready var HitSound := $Hit
-@onready var MissSound := $Miss
 @onready var Animator := $AnimationPlayer
 @onready var Difficulty := $DifficultyTimer
 @onready var screen_centre := Camera.get_screen_center_position()
@@ -60,6 +59,7 @@ func _ready():
 func fade_in_music() -> void:
 	var current_volume := Music.volume_db
 	Music.volume_db = -80
+	Music.play()
 	var tween := get_tree().create_tween()
 	tween.tween_property(Music, "volume_db", current_volume, 0.5)
 
@@ -93,7 +93,6 @@ func _physics_process(delta):
 
 func shoot() -> void:
 	if characters_under_mouse.is_empty():
-		MissSound.play()
 		return
 	
 	var shot_character: CharacterBody2D = null
@@ -106,10 +105,6 @@ func shoot() -> void:
 		elif character.global_position.y > shot_character.global_position.y:
 			shot_character = character
 	
-	if !shot_character:
-		MissSound.play()
-		return
-	HitSound.play()
 	characters_under_mouse.erase(shot_character)
 	shot_character.be_shot()
 	if shot_character.is_runner:
@@ -181,3 +176,7 @@ func pause() -> void:
 func resume() -> void:
 	paused = false
 	resuming = true
+
+
+func _on_shoot_finished():
+	HitSound.play()
