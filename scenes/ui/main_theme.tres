@@ -1,0 +1,15 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://20xe0md1vr5n"]
+
+[ext_resource type="FontFile" uid="uid://dui0dpva4xspb" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="1_7bi2d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_st22f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bl6rl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i8cl3"]
+
+[resource]
+default_font = ExtResource("1_7bi2d")
+Button/styles/focus = SubResource("StyleBoxEmpty_st22f")
+HSeparator/styles/separator = SubResource("StyleBoxEmpty_bl6rl")
+VSeparator/styles/separator = SubResource("StyleBoxEmpty_i8cl3")

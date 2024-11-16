@@ -1,6 +1,8 @@
-[gd_scene load_steps=33 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=40 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/game.gd" id="1_kxtrn"]
+[ext_resource type="Theme" uid="uid://20xe0md1vr5n" path="res://scenes/ui/main_theme.tres" id="1_n57k3"]
+[ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_shx5m"]
 [ext_resource type="Script" path="res://scenes/levels/reflector.gd" id="2_3rbnu"]
 [ext_resource type="Texture2D" uid="uid://b6ijujv7c72kg" path="res://assets/images/Base.png" id="2_ko1fk"]
 [ext_resource type="Texture2D" uid="uid://cix436jju2t3p" path="res://assets/images/Body.png" id="3_v0q4i"]
@@ -13,7 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://bsyjkh5ugk7r8" path="res://assets/sounds/Traffic.mp3" id="8_qiqak"]
 [ext_resource type="Script" path="res://scenes/levels/goal.gd" id="9_ephsm"]
 [ext_resource type="AudioStream" uid="uid://034aqf6gwrqq" path="res://assets/sounds/Impact.mp3" id="9_vogts"]
-[ext_resource type="Script" path="res://scenes/ui/gun.gd" id="12_mpnxf"]
+[ext_resource type="Script" path="res://scenes/entities/gun.gd" id="12_mpnxf"]
 [ext_resource type="Texture2D" uid="uid://b0e03l73cya6p" path="res://assets/images/Sidewalk2.png" id="12_pnrtp"]
 [ext_resource type="AudioStream" uid="uid://cvp3bshdolwai" path="res://assets/sounds/Impact4.mp3" id="13_5v24y"]
 [ext_resource type="AudioStream" uid="uid://de2h2nvor14rt" path="res://assets/sounds/Reload.mp3" id="13_ib133"]
@@ -22,6 +24,9 @@
 [ext_resource type="AudioStream" uid="uid://d02ijr38072mb" path="res://assets/sounds/ReadyWeapon.mp3" id="15_6ykvs"]
 [ext_resource type="Texture2D" uid="uid://bf1tkmukeulq8" path="res://assets/images/Bullets.png" id="16_wdyo0"]
 [ext_resource type="AudioStream" uid="uid://bpwx2luw453vx" path="res://assets/sounds/Empty.mp3" id="19_dhhhc"]
+[ext_resource type="Texture2D" uid="uid://2w370aky3mx2" path="res://assets/images/Health.png" id="23_orcyr"]
+[ext_resource type="Script" path="res://scenes/levels/health.gd" id="23_v5ako"]
+[ext_resource type="PackedScene" uid="uid://di0r42j8yn1ef" path="res://scenes/ui/volume.tscn" id="26_m8bs0"]
 
 [sub_resource type="Animation" id="Animation_ae7k8"]
 length = 0.001
@@ -36,6 +41,34 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Game:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3pvoi"]
+resource_name = "fade"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Game:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.41598, 0.41598, 0.41598, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_gsc1o"]
@@ -58,6 +91,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fi0rd"]
 _data = {
 "RESET": SubResource("Animation_ae7k8"),
+"fade": SubResource("Animation_3pvoi"),
 "flash_red": SubResource("Animation_gsc1o")
 }
 
@@ -65,12 +99,6 @@ _data = {
 size = Vector2(1724, 311)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2c4es"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fquwm"]
-bg_color = Color(0.212305, 0.212305, 0.212305, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sdbms"]
-bg_color = Color(0.6, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_w2grq"]
 length = 0.001
@@ -110,7 +138,53 @@ _data = {
 "recoil": SubResource("Animation_hqxa3")
 }
 
-[node name="Level" type="Node2D"]
+[sub_resource type="Animation" id="Animation_vbost"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7xav2"]
+resource_name = "fade_out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fade:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i40jn"]
+_data = {
+"RESET": SubResource("Animation_vbost"),
+"fade_out": SubResource("Animation_7xav2")
+}
+
+[node name="Level" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_n57k3")
+script = ExtResource("1_shx5m")
 
 [node name="Game" type="Node2D" parent="."]
 script = ExtResource("1_kxtrn")
@@ -204,7 +278,6 @@ texture = ExtResource("14_v8w1t")
 
 [node name="DifficultyTimer" type="Timer" parent="Game"]
 wait_time = 10.0
-autostart = true
 
 [node name="Spawner" type="Line2D" parent="Game"]
 position = Vector2(-97, 172)
@@ -222,42 +295,6 @@ polygon = PackedVector2Array(5, -68, 42, -68, 104, 162, 75, 162)
 
 [node name="Characters" type="Node2D" parent="Game"]
 y_sort_enabled = true
-
-[node name="UI" type="Control" parent="Game"]
-custom_minimum_size = Vector2(640, 360)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 640.0
-offset_bottom = 360.0
-mouse_filter = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Game/UI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Game/UI/MarginContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Game/UI/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 10
-
-[node name="ProgressBar" type="ProgressBar" parent="Game/UI/MarginContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(100, 10)
-layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_fquwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_sdbms")
-max_value = 1000.0
-value = 200.0
-show_percentage = false
 
 [node name="Overlay" type="ColorRect" parent="Game"]
 offset_right = 641.0
@@ -320,6 +357,27 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 
+[node name="Health" type="Node2D" parent="Game"]
+script = ExtResource("23_v5ako")
+
+[node name="1" type="Sprite2D" parent="Game/Health"]
+position = Vector2(612.517, 28.104)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("23_orcyr")
+hframes = 2
+
+[node name="2" type="Sprite2D" parent="Game/Health"]
+position = Vector2(577.267, 28.104)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("23_orcyr")
+hframes = 2
+
+[node name="3" type="Sprite2D" parent="Game/Health"]
+position = Vector2(539.267, 28.354)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("23_orcyr")
+hframes = 2
+
 [node name="Camera2D" type="Camera2D" parent="Game"]
 position = Vector2(321.449, 172.233)
 limit_left = 0
@@ -329,8 +387,102 @@ limit_bottom = 360
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
-[connection signal="timeout" from="Game/DifficultyTimer" to="." method="_on_difficulty_timer_timeout"]
+[node name="Tutorial" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ColorRect" type="ColorRect" parent="Tutorial"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.380183, 0.464741, 0.398594, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Tutorial"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Tutorial/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Sniper's Guide"
+
+[node name="HSeparator" type="HSeparator" parent="Tutorial/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Label2" type="Label" parent="Tutorial/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Shoot = Left Mouse Button"
+
+[node name="Label3" type="Label" parent="Tutorial/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Reload = R"
+
+[node name="Label4" type="Label" parent="Tutorial/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Pause = Esc"
+
+[node name="HSeparator2" type="HSeparator" parent="Tutorial/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tutorial/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Start" type="Button" parent="Tutorial/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 10
+text = "GOT IT"
+
+[node name="Volume" parent="." instance=ExtResource("26_m8bs0")]
+visible = false
+layout_mode = 1
+mouse_filter = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_i40jn")
+}
+
+[node name="Fade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+metadata/_edit_lock_ = true
+
 [connection signal="body_entered" from="Game/Goal" to="Game/Goal" method="_on_body_entered"]
 [connection signal="finished" from="Game/Gun/Shoot" to="Game/Gun" method="_on_shoot_finished"]
 [connection signal="timeout" from="Game/Gun/CockingTimer" to="Game/Gun" method="_on_cocking_timer_timeout"]
 [connection signal="timeout" from="Game/Gun/ReloadTimer" to="Game/Gun" method="_on_reload_timer_timeout"]
+[connection signal="button_down" from="Tutorial/MarginContainer/VBoxContainer/Start" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="Volume/MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_button_down"]
+[connection signal="button_down" from="Volume/MarginContainer/VBoxContainer/HBoxContainer/Main Menu" to="." method="_on_main_menu_button_down"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+
+[editable path="Volume"]

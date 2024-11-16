@@ -15,9 +15,23 @@ extends Node2D
 var ammo := base_ammo
 var reloading := false
 var cocking := false
+var paused := true
+
+func _ready():
+	God.pause.connect(pause)
+	God.resume.connect(resume)
+
+
+func pause():
+	paused = true
+
+func resume():
+	paused = false
 
 
 func _process(_delta):
+	if paused:
+		return
 	Crosshair.global_position = get_global_mouse_position()
 
 

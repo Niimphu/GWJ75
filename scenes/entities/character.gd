@@ -18,6 +18,7 @@ var direction := Vector2.RIGHT
 var scale_factor: float = 1.0
 var time := 0.0
 var alive := true
+var paused := false
 
 var base: int
 var body: int
@@ -49,10 +50,12 @@ func _ready():
 	colour_hair()
 	
 	Animator.animation_finished.connect(die)
+	God.pause.connect(pause)
+	God.resume.connect(resume)
 
 
 func _physics_process(_delta):
-	if alive:
+	if alive and not paused:
 		move()
 
 
@@ -65,6 +68,8 @@ func colour_hair():
 
 
 func _process(delta):
+	if paused:
+		return
 	time += delta * 500
 	if alive and time > speed:
 		time = 0
@@ -137,3 +142,11 @@ func _on_hurtbox_mouse_entered():
 
 func _on_hurtbox_mouse_exited():
 	mouse_off.emit(self)
+
+
+func pause() -> void:
+	paused = true
+
+
+func resume() -> void:
+	paused = false

@@ -259,6 +259,5 @@ scale_amount_max = 2.0
 color = Color(0.0338533, 0.0338533, 0.0338533, 1)
 color_ramp = SubResource("Gradient_leekk")
 
-[connection signal="input_event" from="Hurtbox" to="." method="_on_hurtbox_input_event"]
 [connection signal="mouse_entered" from="Hurtbox" to="." method="_on_hurtbox_mouse_entered"]
 [connection signal="mouse_exited" from="Hurtbox" to="." method="_on_hurtbox_mouse_exited"]
