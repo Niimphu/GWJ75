@@ -4,6 +4,7 @@ extends Control
 
 
 func _ready():
+	God.reset_sound()
 	settings.visible = false
 
 

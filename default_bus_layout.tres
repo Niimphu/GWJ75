@@ -1,54 +1,32 @@
-[gd_resource type="AudioBusLayout" load_steps=7 format=3 uid="uid://r5wi2x8ai4bd"]
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://r5wi2x8ai4bd"]
 
-[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_pn5f4"]
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_bs3fo"]
 resource_name = "LowPassFilter"
 
-[sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_dvg02"]
-resource_name = "PitchShift"
-pitch_scale = 0.5
-
-[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_1gghr"]
-resource_name = "LowPassFilter"
-
-[sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_8v5fp"]
-resource_name = "PitchShift"
-pitch_scale = 0.5
-
-[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_py3jw"]
-resource_name = "LowPassFilter"
-
-[sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_oay1y"]
+[sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_7fr8p"]
 resource_name = "PitchShift"
 pitch_scale = 0.5
 
 [resource]
+bus/0/effect/0/effect = SubResource("AudioEffectLowPassFilter_bs3fo")
+bus/0/effect/0/enabled = false
+bus/0/effect/1/effect = SubResource("AudioEffectPitchShift_7fr8p")
+bus/0/effect/1/enabled = false
 bus/1/name = &"SFX"
 bus/1/solo = false
 bus/1/mute = false
 bus/1/bypass_fx = false
 bus/1/volume_db = -5.04538
 bus/1/send = &"Master"
-bus/1/effect/0/effect = SubResource("AudioEffectLowPassFilter_pn5f4")
-bus/1/effect/0/enabled = false
-bus/1/effect/1/effect = SubResource("AudioEffectPitchShift_dvg02")
-bus/1/effect/1/enabled = false
 bus/2/name = &"Environment"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = -5.04224
 bus/2/send = &"Master"
-bus/2/effect/0/effect = SubResource("AudioEffectLowPassFilter_1gghr")
-bus/2/effect/0/enabled = false
-bus/2/effect/1/effect = SubResource("AudioEffectPitchShift_8v5fp")
-bus/2/effect/1/enabled = false
 bus/3/name = &"Music"
 bus/3/solo = false
 bus/3/mute = false
 bus/3/bypass_fx = false
 bus/3/volume_db = -5.04224
 bus/3/send = &"Master"
-bus/3/effect/0/effect = SubResource("AudioEffectLowPassFilter_py3jw")
-bus/3/effect/0/enabled = false
-bus/3/effect/1/effect = SubResource("AudioEffectPitchShift_oay1y")
-bus/3/effect/1/enabled = false

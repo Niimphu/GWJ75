@@ -22,6 +22,7 @@ extends Node2D
 @onready var screen_centre := Camera.get_screen_center_position()
 #@onready var Bar := $UI/MarginContainer/HBoxContainer/VBoxContainer/ProgressBar
 @onready var Hearts := $Health
+@onready var Music: AudioStreamPlayer = $Music
 
 var time := 0.0
 var vampire_rate := 3
@@ -30,27 +31,37 @@ var runners_can_spawn = false
 var characters_under_mouse: Array
 var health := 3
 
-var civilians_killed := 0
 var vampires_killed := 0
 var runners_killed := 0
+var civilians_killed := 0
 
 var game_over := false
 var paused := true
 var resuming := false
 
+signal gg(vamps: int, runners: int, civs, int)
+
 func _ready():
 	God.pause.connect(pause)
 	God.resume.connect(resume)
+	fade_in_music()
 	await God.resume
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	
 	Spawner.mirror_bottom = $Window.bottom_edge
 	vampire_rate += RNG.randi_in_range(0, 2)
-	get_tree().create_timer(60).timeout.connect(spawn_runners)
+	get_tree().create_timer(30).timeout.connect(spawn_runners)
 	
 	Difficulty.wait_time = difficulty_timer
 	Difficulty.start()
 	Difficulty.timeout.connect(bump_difficulty)
+
+
+func fade_in_music() -> void:
+	var current_volume := Music.volume_db
+	Music.volume_db = -80
+	var tween := get_tree().create_tween()
+	tween.tween_property(Music, "volume_db", current_volume, 0.5)
 
 
 func _physics_process(delta):
@@ -150,18 +161,10 @@ func bump_difficulty():
 
 func end_game() -> void:
 	game_over = true
+	gg.emit(vampires_killed, runners_killed, civilians_killed)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	Animator.play("fade")
-	muffle_sound()
-
-
-func muffle_sound() -> void:
-	AudioServer.set_bus_effect_enabled(1, 0, true)
-	AudioServer.set_bus_effect_enabled(1, 1, true)
-	AudioServer.set_bus_effect_enabled(2, 0, true)
-	AudioServer.set_bus_effect_enabled(2, 1, true)
-	AudioServer.set_bus_effect_enabled(3, 0, true)
-	AudioServer.set_bus_effect_enabled(3, 1, true)
+	God.muffle_sound()
 
 
 func mouse_over_character(character: CharacterBody2D):
