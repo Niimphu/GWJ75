@@ -53,6 +53,8 @@ func shoot() -> bool:
 func reload() -> void:
 	if ammo == base_ammo:
 		return
+	ammo = 0
+	BulletCounter.value = ammo
 	reloading = true
 	Crosshair.self_modulate = Color.DARK_SLATE_BLUE
 	ReloadSound.play()

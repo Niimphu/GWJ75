@@ -32,12 +32,12 @@
 [ext_resource type="Texture2D" uid="uid://2w370aky3mx2" path="res://assets/images/Health.png" id="23_orcyr"]
 [ext_resource type="Script" path="res://scenes/levels/health.gd" id="23_v5ako"]
 [ext_resource type="Texture2D" uid="uid://ca38yexivg1xy" path="res://assets/images/Bus.png" id="23_xesw7"]
-[ext_resource type="AudioStream" uid="uid://dcqapvr3wo1ks" path="res://assets/sounds/BusGoingPast.mp3" id="25_ke8y8"]
+[ext_resource type="AudioStream" uid="uid://mmk6vhhcbgth" path="res://assets/sounds/Bus2.mp3" id="25_4o0fg"]
 [ext_resource type="PackedScene" uid="uid://di0r42j8yn1ef" path="res://scenes/ui/volume.tscn" id="26_m8bs0"]
-[ext_resource type="AudioStream" uid="uid://sbkqfwng2say" path="res://assets/sounds/shot2.wav" id="27_wugen"]
 [ext_resource type="Texture2D" uid="uid://dq4w232ykprmv" path="res://assets/images/Screenshot.png" id="28_07p7x"]
 [ext_resource type="Texture2D" uid="uid://c3v1wo1u7rp3w" path="res://assets/images/Screenshot2.png" id="28_oa34o"]
 [ext_resource type="Script" path="res://scenes/ui/gg.gd" id="28_ptk4u"]
+[ext_resource type="AudioStream" uid="uid://w6uv1c2gto27" path="res://assets/sounds/Shot3.mp3" id="30_h7wf1"]
 
 [sub_resource type="Animation" id="Animation_ae7k8"]
 length = 0.001
@@ -114,35 +114,6 @@ size = Vector2(1724, 311)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n7l2h"]
 size = Vector2(432.042, 154.856)
 
-[sub_resource type="Animation" id="Animation_7ouey"]
-resource_name = "drive"
-length = 7.0
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3.8, 7),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1000, 286.766), Vector2(1000, 286.766), Vector2(-400, 286.766)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BusSound:playing")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
 [sub_resource type="Animation" id="Animation_i0nrb"]
 length = 0.001
 tracks/0/type = "value"
@@ -168,6 +139,35 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_7ouey"]
+resource_name = "drive"
+length = 6.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.1, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1000, 286.766), Vector2(-400, 286.766)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BusSound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xk1h3"]
@@ -421,7 +421,7 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("23_xesw7")
 
 [node name="BusSound" type="AudioStreamPlayer" parent="Game/SchoolBus"]
-stream = ExtResource("25_ke8y8")
+stream = ExtResource("25_4o0fg")
 volume_db = 10.306
 pitch_scale = 0.5
 bus = &"Environment"
@@ -444,14 +444,16 @@ position = Vector2(321.449, 172.233)
 script = ExtResource("12_mpnxf")
 
 [node name="Sprite2D" type="Sprite2D" parent="Game/Gun"]
+scale = Vector2(2, 2)
 texture = ExtResource("13_od8b1")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="Game/Gun/Sprite2D"]
-offset_left = 12.0976
-offset_top = -5.24887
-offset_right = 52.0976
-offset_bottom = 34.7511
+offset_left = 14.7755
+offset_top = -11.1165
+offset_right = 54.7755
+offset_bottom = 28.8835
 rotation = 1.5708
+scale = Vector2(1.5, 1.5)
 mouse_filter = 2
 max_value = 5.0
 value = 5.0
@@ -471,8 +473,7 @@ stream = ExtResource("13_ib133")
 bus = &"SFX"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Game/Gun"]
-stream = ExtResource("27_wugen")
-volume_db = 7.495
+stream = ExtResource("30_h7wf1")
 bus = &"SFX"
 
 [node name="Ready" type="AudioStreamPlayer" parent="Game/Gun"]
@@ -515,6 +516,7 @@ hframes = 2
 
 [node name="Camera2D" type="Camera2D" parent="Game"]
 position = Vector2(321.449, 172.233)
+scale = Vector2(2, 2)
 limit_left = 0
 limit_top = 0
 limit_right = 640

@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://20xe0md1vr5n" path="res://scenes/ui/main_theme.tres" id="1_1s7gq"]
 [ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="2_dmoq6"]
 [ext_resource type="PackedScene" uid="uid://di0r42j8yn1ef" path="res://scenes/ui/volume.tscn" id="3_7slyd"]
-[ext_resource type="AudioStream" uid="uid://dddakrvk4ckad" path="res://assets/sounds/BeepBox-Song.mp3" id="3_k6lsa"]
+[ext_resource type="AudioStream" uid="uid://cdb7a68noec3b" path="res://assets/sounds/AltMenuMusic.mp3" id="3_i8xry"]
 [ext_resource type="PackedScene" uid="uid://dhwa53oq5ens5" path="res://scenes/entities/menu_guy.tscn" id="4_gn63h"]
 
 [sub_resource type="Gradient" id="Gradient_kgv3y"]
@@ -63,9 +63,10 @@ theme = ExtResource("1_1s7gq")
 script = ExtResource("2_dmoq6")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_k6lsa")
-volume_db = -3.773
+stream = ExtResource("3_i8xry")
+volume_db = -5.0
 autoplay = true
+stream_paused = true
 bus = &"Music"
 parameters/looping = true
 
