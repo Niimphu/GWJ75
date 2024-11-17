@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://btrevly7ubaqd"]
+[gd_scene load_steps=58 format=3 uid="uid://btrevly7ubaqd"]
 
 [ext_resource type="Script" path="res://scenes/levels/game.gd" id="1_kxtrn"]
 [ext_resource type="Theme" uid="uid://20xe0md1vr5n" path="res://scenes/ui/main_theme.tres" id="1_n57k3"]
@@ -28,8 +28,11 @@
 [ext_resource type="Texture2D" uid="uid://bf1tkmukeulq8" path="res://assets/images/Bullets.png" id="16_wdyo0"]
 [ext_resource type="AudioStream" uid="uid://bpwx2luw453vx" path="res://assets/sounds/Empty.mp3" id="19_dhhhc"]
 [ext_resource type="Texture2D" uid="uid://bwb64hvpxleya" path="res://assets/images/Bloodbank.png" id="19_ya5xb"]
+[ext_resource type="Script" path="res://scenes/levels/school_bus.gd" id="23_c2sah"]
 [ext_resource type="Texture2D" uid="uid://2w370aky3mx2" path="res://assets/images/Health.png" id="23_orcyr"]
 [ext_resource type="Script" path="res://scenes/levels/health.gd" id="23_v5ako"]
+[ext_resource type="Texture2D" uid="uid://ca38yexivg1xy" path="res://assets/images/Bus.png" id="23_xesw7"]
+[ext_resource type="AudioStream" uid="uid://dcqapvr3wo1ks" path="res://assets/sounds/BusGoingPast.mp3" id="25_ke8y8"]
 [ext_resource type="PackedScene" uid="uid://di0r42j8yn1ef" path="res://scenes/ui/volume.tscn" id="26_m8bs0"]
 [ext_resource type="AudioStream" uid="uid://sbkqfwng2say" path="res://assets/sounds/shot2.wav" id="27_wugen"]
 [ext_resource type="Texture2D" uid="uid://dq4w232ykprmv" path="res://assets/images/Screenshot.png" id="28_07p7x"]
@@ -108,6 +111,71 @@ size = Vector2(1724, 311)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2c4es"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n7l2h"]
+size = Vector2(432.042, 154.856)
+
+[sub_resource type="Animation" id="Animation_7ouey"]
+resource_name = "drive"
+length = 7.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.8, 7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1000, 286.766), Vector2(1000, 286.766), Vector2(-400, 286.766)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BusSound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_i0nrb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(973.433, 286.766)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BusSound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xk1h3"]
+_data = {
+"RESET": SubResource("Animation_i0nrb"),
+"drive": SubResource("Animation_7ouey")
+}
+
 [sub_resource type="Animation" id="Animation_w2grq"]
 length = 0.001
 tracks/0/type = "value"
@@ -147,7 +215,7 @@ _data = {
 }
 
 [sub_resource type="Gradient" id="Gradient_jnxjj"]
-colors = PackedColorArray(1, 0.47, 0.478833, 1, 0.25, 0.0333333, 0, 1)
+colors = PackedColorArray(0.554572, 0, 0.12024, 1, 0.25, 0.0333333, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xabg8"]
 gradient = SubResource("Gradient_jnxjj")
@@ -310,6 +378,13 @@ texture = ExtResource("14_v8w1t")
 [node name="DifficultyTimer" type="Timer" parent="Game"]
 wait_time = 10.0
 
+[node name="SpawnRunners" type="Timer" parent="Game"]
+wait_time = 35.0
+one_shot = true
+
+[node name="BusTimer" type="Timer" parent="Game"]
+wait_time = 40.0
+
 [node name="Spawner" type="Line2D" parent="Game"]
 position = Vector2(-97, 172)
 points = PackedVector2Array(57, -19, 56.6224, 135.003)
@@ -331,6 +406,30 @@ texture = ExtResource("19_ya5xb")
 
 [node name="Characters" type="Node2D" parent="Game"]
 y_sort_enabled = true
+
+[node name="SchoolBus" type="Area2D" parent="Game"]
+modulate = Color(0.851769, 0.851769, 0.851769, 1)
+position = Vector2(973.433, 286.766)
+script = ExtResource("23_c2sah")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/SchoolBus"]
+position = Vector2(6.50079, 10.7194)
+shape = SubResource("RectangleShape2D_n7l2h")
+
+[node name="Sprite2D" type="Sprite2D" parent="Game/SchoolBus"]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("23_xesw7")
+
+[node name="BusSound" type="AudioStreamPlayer" parent="Game/SchoolBus"]
+stream = ExtResource("25_ke8y8")
+volume_db = 10.306
+pitch_scale = 0.5
+bus = &"Environment"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Game/SchoolBus"]
+libraries = {
+"": SubResource("AnimationLibrary_xk1h3")
+}
 
 [node name="Overlay" type="ColorRect" parent="Game"]
 offset_right = 641.0
@@ -424,6 +523,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
 [node name="GG" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -508,6 +608,7 @@ size_flags_horizontal = 8
 text = "Main Menu"
 
 [node name="Tutorial" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -666,7 +767,12 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
 
+[connection signal="timeout" from="Game/SpawnRunners" to="Game" method="_on_spawn_runners_timeout"]
+[connection signal="timeout" from="Game/BusTimer" to="Game" method="_on_bus_timer_timeout"]
 [connection signal="body_entered" from="Game/Goal" to="Game/Goal" method="_on_body_entered"]
+[connection signal="mouse_entered" from="Game/SchoolBus" to="Game/SchoolBus" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Game/SchoolBus" to="Game/SchoolBus" method="_on_mouse_exited"]
+[connection signal="animation_finished" from="Game/SchoolBus/AnimationPlayer" to="Game/SchoolBus" method="_on_animation_player_animation_finished"]
 [connection signal="finished" from="Game/Gun/Shoot" to="Game" method="_on_shoot_finished"]
 [connection signal="finished" from="Game/Gun/Shoot" to="Game/Gun" method="_on_shoot_finished"]
 [connection signal="timeout" from="Game/Gun/CockingTimer" to="Game/Gun" method="_on_cocking_timer_timeout"]

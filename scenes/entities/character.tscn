@@ -250,16 +250,15 @@ color = Color(0.0338533, 0.0338533, 0.0338533, 1)
 color_ramp = SubResource("Gradient_leekk")
 
 [node name="Step" type="AudioStreamPlayer" parent="."]
-volume_db = -8.506
-autoplay = true
+bus = &"SFX"
 
 [node name="Death" type="AudioStreamPlayer" parent="."]
-volume_db = -10.306
 pitch_scale = 1.5
+bus = &"SFX"
 
 [node name="Slurp" type="AudioStreamPlayer" parent="."]
-volume_db = -6.559
 pitch_scale = 1.4
+bus = &"SFX"
 
 [connection signal="mouse_entered" from="Hurtbox" to="." method="_on_hurtbox_mouse_entered"]
 [connection signal="mouse_exited" from="Hurtbox" to="." method="_on_hurtbox_mouse_exited"]

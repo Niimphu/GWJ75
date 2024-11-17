@@ -16,12 +16,13 @@ var is_runner := false
 @onready var Slurp := $Slurp
 
 
-var speed: float = 50
+var speed: float = 55
 var direction := Vector2.RIGHT
 var scale_factor: float = 1.0
 var time := 0.0
 var alive := true
 var paused := false
+var time_mod := 500
 
 var base: int
 var body: int
@@ -34,9 +35,9 @@ signal mouse_on(character: CharacterBody2D)
 signal mouse_off(character: CharacterBody2D)
 
 func _ready():
-	speed += RNG.randi_in_range(-15, 15)
+	speed += RNG.randi_in_range(-10, 10)
 	if is_runner:
-		speed *= 1.5
+		speed *= 2
 	
 	base = RNG.randi_in_range(1, 3) * 7
 	if base == 7:
@@ -52,7 +53,11 @@ func _ready():
 	
 	colour_hair()
 	Step.pitch_scale += RNG.rand_weight() * 2 - 0.5
-	Death.pitch_scale += RNG.rand_weight() - 0.3
+	if is_vampire:
+		Death.pitch_scale -= RNG.rand_weight() / 2
+	else:
+		Death.pitch_scale += RNG.rand_weight() - 0.3
+	
 	
 	Animator.animation_finished.connect(die)
 	God.pause.connect(pause)
@@ -75,7 +80,7 @@ func colour_hair():
 func _process(delta):
 	if paused:
 		return
-	time += delta * 500
+	time += delta * time_mod
 	if alive and time > speed:
 		time = 0
 		update_sprite_frames()
@@ -116,7 +121,7 @@ func set_sprites(SpritePreloader: ResourcePreloader) -> void:
 	Shadow.set_texture(SpritePreloader.get_shadow())
 	Slurp.stream = SpritePreloader.get_resource("schlurp")
 	Step.stream = SpritePreloader.get_resource("step")
-	Step.play()
+	#Step.play()
 	if is_vampire:
 		Death.stream = SpritePreloader.get_resource("ugh")
 	else:

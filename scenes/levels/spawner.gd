@@ -10,11 +10,12 @@ var mirror_bottom: float
 
 func spawn_character(Characters: Node2D, Reflections: Node2D, vampire: bool = false, can_be_runner: bool = false) -> CharacterBody2D:
 	var new_character = character_scene.instantiate()
+	new_character.is_vampire = vampire
 	new_character.set("global_position", get_random_spawn_location())
 	new_character.set_sprites(SpritePreloader)
 	Characters.add_child(new_character)
-	new_character.is_vampire = vampire
-	if vampire and can_be_runner and RNG.randi_in_range(0, 5) == 0:
+	if vampire and can_be_runner and RNG.randi_in_range(0, 4) == 0:
+		new_character.speed *= 1.5
 		new_character.is_runner = true
 	if not vampire:
 		spawn_reflection(new_character, Reflections)

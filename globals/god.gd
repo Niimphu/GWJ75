@@ -6,6 +6,7 @@ signal pause
 signal resume
 
 var skip_tutorial: bool = false
+var shooting_bus: bool = false
 
 
 func reset_sound() -> void:
