@@ -1,10 +1,5 @@
 extends Node
 
-@warning_ignore("unused_signal")
-signal pause
-@warning_ignore("unused_signal")
-signal resume
-
 var skip_tutorial: bool = false
 var shooting_bus: bool = false
 

@@ -22,7 +22,3 @@ func game_over() -> void:
 	for node in nodes:
 		await get_tree().create_timer(0.5).timeout
 		node.visible = true
-
-
-func _on_check_box_toggled(toggled_on):
-	God.skip_tutorial = toggled_on

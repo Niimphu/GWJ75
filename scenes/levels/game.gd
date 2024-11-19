@@ -7,7 +7,7 @@ extends Node2D
 ## Multiplier for time between vampire spawns each time difficulty increases
 @export var difficulty_ramp := 0.9
 ## Frequency of NPC spawn (lower = more often)
-@export var rate: float = 1.2
+@export var rate: float = 1
 
 @onready var Camera: Camera2D = $Camera2D
 @onready var CameraTracker := $Gun/Sprite2D/RemoteTransform2D
@@ -19,33 +19,29 @@ extends Node2D
 @onready var Animator := $AnimationPlayer
 @onready var Difficulty := $DifficultyTimer
 @onready var screen_centre := Camera.get_screen_center_position()
-@onready var Hearts := $Health
 @onready var Music: AudioStreamPlayer = $Music
 @onready var Bus := $SchoolBus
+@onready var UI := $"../UI"
 
 var time := 0.0
 var vampire_rate := 3
 var spawns_since_vampire := 3
 var runners_can_spawn = false
 var characters_under_mouse: Array
-var health := 3
+var health := 100
+var kill_streak := 0
 
 var vampires_killed := 0
 var runners_killed := 0
 var civilians_killed := 0
 
 var game_over := false
-var paused := true
-var resuming := false
+var resuming := true
 
 signal gg(vamps: int, runners: int, civs, int)
 
 func _ready():
-	God.pause.connect(pause)
-	God.resume.connect(resume)
 	fade_in_music()
-	await God.resume
-	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	
 	Spawner.mirror_bottom = $Window.bottom_edge
 	vampire_rate += RNG.randi_in_range(0, 2)
@@ -53,8 +49,10 @@ func _ready():
 	Difficulty.wait_time = difficulty_timer
 	Difficulty.start()
 	Difficulty.timeout.connect(bump_difficulty)
-	$BusTimer.start()
 	$SpawnRunners.start()
+	
+	if not God.skip_tutorial:
+		get_tree().paused = true
 
 
 func fade_in_music() -> void:
@@ -66,7 +64,11 @@ func fade_in_music() -> void:
 
 
 func _physics_process(delta):
-	if game_over or paused:
+	if game_over:
+		return
+	if resuming:
+		resuming = false
+		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 		return
 	time += delta
 	if time > rate:
@@ -75,25 +77,17 @@ func _physics_process(delta):
 		time = 0
 		for i in spawn_count:
 			spawn_character()
-	if resuming:
-		resuming = false
-		return
 	if Input.is_action_just_pressed("left_click") && Gun.shoot():
 		shoot()
 	elif Input.is_action_just_pressed("reload"):
 		Gun.reload()
-	if Input.is_action_just_pressed("right_click"):
-		var zoom_tween = get_tree().create_tween()
-		zoom_tween.tween_property(Camera, "zoom", Vector2.ONE * 1.3, 0.1)
-		CameraTracker.update_position = false
-	elif Input.is_action_just_released("right_click"):
-		CameraTracker.update_position = true
-		var zoom_tween = get_tree().create_tween()
-		zoom_tween.tween_property(Camera, "zoom", Vector2.ONE, 0.1)
+	elif Input.is_action_just_pressed("focus"):
+		use_focus()
 
 
 func shoot() -> void:
 	if characters_under_mouse.is_empty() or God.shooting_bus:
+		UI.reset_focus()
 		return
 	
 	var shot_character: CharacterBody2D = null
@@ -112,11 +106,31 @@ func shoot() -> void:
 	shot_character.be_shot()
 	if shot_character.is_runner:
 		runners_killed += 1
+		UI.gain_focus()
+		if !(runners_killed + vampires_killed) % 10:
+			health += 1
+			UI.update_health(health)
 	elif shot_character.is_vampire:
 		vampires_killed += 1
+		UI.gain_focus()
+		if !(runners_killed + vampires_killed) % 10:
+			health += 1
+			UI.update_health(health)
 	else:
 		civilians_killed += 1
+		health -= 10
+		UI.reset_focus()
 		lose_life()
+
+
+func use_focus() -> void:
+	var effect: int = UI.activate_focus()
+	if effect == 0:
+		return
+	#infinite ammo
+	if effect == 100:
+		pass
+		#slow time
 
 
 func spawn_character() -> void:
@@ -137,19 +151,20 @@ func character_reached_goal(is_vampire: bool) -> void:
 	if game_over:
 		return
 	if is_vampire:
+		health -= 20
 		lose_life()
 
 
 func lose_life() -> void:
-	Hearts.lose_life()
+	UI.update_health(health)
 	Animator.play("flash_red")
-	health -= 1
 	if health <= 0:
 		end_game()
 
 
 func bump_difficulty():
 	rate *= difficulty_ramp
+	difficulty_ramp *= 1.01
 
 
 func end_game() -> void:
@@ -168,27 +183,8 @@ func mouse_off_character(character: CharacterBody2D):
 	characters_under_mouse.erase(character)
 
 
-func pause() -> void:
-	paused = true
-	$BusTimer.paused = true
-	Difficulty.paused = true
-
-
-func resume() -> void:
-	paused = false
-	resuming = true
-	$BusTimer.paused = false
-	Difficulty.paused = false
-
-
 func _on_shoot_finished():
 	HitSound.play()
-
-
-func _on_bus_timer_timeout():
-	if paused:
-		return
-	Bus.bussing()
 
 
 func _on_spawn_runners_timeout():

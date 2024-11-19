@@ -18,3 +18,7 @@ func _on_mouse_entered():
 
 func _on_mouse_exited():
 	God.shooting_bus = false
+
+
+func _on_bus_timer_timeout():
+	bussing()
